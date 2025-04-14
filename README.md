@@ -54,12 +54,12 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
   - Ordenamiento de resultados
 
 #### 2. Gestión de Usuarios
-- **Registrar Usuario**:
+- **Registrar modelos.Usuario**:
   - Proceso de registro de nuevos usuarios
   - Validación de datos del usuario
   - Verificación del registro exitoso
 
-- **Buscar Usuario**:
+- **Buscar modelos.Usuario**:
   - Proceso de búsqueda de usuarios
   - Visualización de información del usuario
   - Manejo de usuarios no encontrados
@@ -127,21 +127,21 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 
 ### Etapa 1: Diseño Base y Principios SOLID
 - **SRP**: 
-  - Crear clase `Usuario` con atributos básicos (nombre, ID, email)
-  - Crear clase `RecursoDigital` como clase base abstracta
+  - Crear clase `modelos.Usuario` con atributos básicos (nombre, ID, email)
+  - Crear clase `modelos.RecursoDigital` como clase base abstracta
   - Implementar clase `GestorUsuarios` separada de `GestorRecursos`
   - Cada clase debe tener una única responsabilidad clara
   - Implementar clase `Consola` para manejar la interacción con el usuario
 
 - **OCP**: 
-  - Diseñar interfaz `RecursoDigital` con métodos comunes
+  - Diseñar interfaz `modelos.RecursoDigital` con métodos comunes
   - Implementar clases concretas `Libro`, `Revista`, `Audiolibro`
   - Usar herencia para extender funcionalidad sin modificar código existente
   - Ejemplo: agregar nuevo tipo de recurso sin cambiar clases existentes
   - Implementar menú de consola extensible para nuevos tipos de recursos
 
 - **LSP**: 
-  - Asegurar que todas las subclases de `RecursoDigital` puedan usarse donde se espera `RecursoDigital`
+  - Asegurar que todas las subclases de `modelos.RecursoDigital` puedan usarse donde se espera `modelos.RecursoDigital`
   - Implementar métodos comunes en la clase base
   - Validar que el comportamiento sea consistente en todas las subclases
   - Crear métodos de visualización en consola para todos los tipos de recursos
@@ -160,8 +160,8 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 
 ### Etapa 2: Gestión de Recursos y Colecciones
 - Implementar colecciones:
-  - Usar `ArrayList<RecursoDigital>` para almacenar recursos
-  - Usar `Map<String, Usuario>` para gestionar usuarios
+  - Usar `ArrayList<modelos.RecursoDigital>` para almacenar recursos
+  - Usar `Map<String, modelos.Usuario>` para gestionar usuarios
   - Implementar métodos de búsqueda básicos
   - Crear menú de consola para gestión de recursos
 
@@ -243,33 +243,42 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 ## 📋 Detalle de Implementación
 
 ### 1. Estructura Base
+
 ```java
 // Interfaces principales
-public interface RecursoDigital {
+public interface modelos.RecursoDigital {
     String getIdentificador();
+
     EstadoRecurso getEstado();
+
     void actualizarEstado(EstadoRecurso estado);
 }
 
 public interface Prestable {
     boolean estaDisponible();
+
     LocalDateTime getFechaDevolucion();
+
     void prestar(Usuario usuario);
 }
 
 public interface Notificable {
     void enviarNotificacion(String mensaje);
+
     List<Notificacion> getNotificacionesPendientes();
 }
 
 // Clase base abstracta
-public abstract class RecursoBase implements RecursoDigital, Prestable {
+public abstract class RecursoBase implements modelos.RecursoDigital, Prestable {
     // Implementación común
 }
 ```
 
 ### 2. Gestión de Biblioteca
+
 ```java
+import modelos.RecursoDigital;
+
 public class GestorBiblioteca {
     private final Map<String, RecursoDigital> recursos;
     private final List<Prestamo> prestamos;

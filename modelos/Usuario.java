@@ -1,25 +1,33 @@
+package modelos;
+
 public class Usuario {
     private String nombre;
     private int id;
     private String email;
 
     public Usuario(String nombre, int id, String email) {
-        this.nombre = nombre;
-        this.id = id;
-        this.email = email;
+        setNombre(nombre);
+        setId(id);
+        setEmail(email);
     }
 
     public String getNombre() {
         return nombre;
     }
     public void setNombre(String nombre) {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacio");
+            }
         this.nombre = nombre;
-    }
+        }
 
     public int getId() {
         return id;
     }
     public void setId(int id) {
+        if (id < 0) {
+            throw new IllegalArgumentException("El id es invalido");
+        }
         this.id = id;
     }
 
@@ -27,13 +35,16 @@ public class Usuario {
         return email;
     }
     public void setEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("El email no puede estar vacio");
+        }
         this.email = email;
     }
 
     @Override
     public String toString() {
-        return "Usuario: "+ nombre +
-                "Id: " + id +
-                "Email: " + email;
+        return "modelos.Usuario: "+ nombre +
+                " / Id: " + id +
+                " / Email: " + email;
     }
 }
