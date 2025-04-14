@@ -28,4 +28,9 @@ public abstract class RecursoDigital {
     public void setAutor(String autor) {
         this.autor = autor;
     }
+    @Override
+    public String toString() {
+        return "Titulo: " + titulo +
+                "\nAutor: " + autor;
+    }
 }

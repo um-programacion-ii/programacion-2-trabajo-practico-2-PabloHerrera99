@@ -43,8 +43,8 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "modelos.Usuario: "+ nombre +
-                " / Id: " + id +
-                " / Email: " + email;
+        return "Usuario: "+ nombre +
+                "\nId: " + id +
+                "\nEmail: " + email;
     }
 }
