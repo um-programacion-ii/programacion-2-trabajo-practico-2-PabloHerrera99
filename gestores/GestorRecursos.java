@@ -1,9 +1,7 @@
 package gestores;
 
 import modelos.RecursoDigital;
-import modelos.Usuario;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
