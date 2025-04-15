@@ -245,7 +245,7 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 ### 1. Estructura Base
 
 ```java
-// interfaces principales
+// Interfaces principales
 public interface modelos.RecursoDigital {
     String getIdentificador();
 
@@ -299,7 +299,7 @@ public class SistemaPrestamos {
 ## ✅ Entrega y Flujo de Trabajo con GitHub
 
 1. **Configuración del Repositorio**
-   - Proteger la rama `Main`
+   - Proteger la rama `main`
    - Crear template de Issues y Pull Requests
 
 2. **Project Kanban**

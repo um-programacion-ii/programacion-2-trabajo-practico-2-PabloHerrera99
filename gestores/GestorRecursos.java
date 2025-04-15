@@ -1,9 +1,7 @@
 package gestores;
 
 import modelos.RecursoDigital;
-import modelos.Usuario;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,6 +12,27 @@ public class GestorRecursos {
 
     public GestorRecursos(List<RecursoDigital> recursoDigital){
         this.recursoDigital = recursoDigital;
+    }
+
+    public void crearRecurso(RecursoDigital recurso){
+        recursoDigital.add(recurso);
+    }
+
+    public void eliminarRecurso(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el titulo del recurso que desea eliminar");
+        boolean eliminado = false;
+        String titulo = sc.nextLine();
+        for (RecursoDigital recurso : recursoDigital) {
+            if (recurso.getTitulo().equals(titulo)) {
+                recursoDigital.remove(recurso);
+                System.out.println("El recurso eliminado");
+                eliminado = true;
+            }
+        }
+        if (!eliminado){
+            System.out.println("El recurso no existe");
+        }
     }
 
     public void buscarRecursos(){

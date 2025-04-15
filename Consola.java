@@ -1,5 +1,4 @@
-import modelos.Usuario;
-import modelos.RecursoDigital;
+import modelos.*;
 import gestores.GestorUsuarios;
 import gestores.GestorRecursos;
 
@@ -73,18 +72,52 @@ public class Consola {
         boolean continuar = true;
         while (continuar) {
             System.out.println("---Menu De Gestion de Recursos---");
-            //System.out.println("1. Crear Recurso");
-            //System.out.println("2. Eliminar Recurso");
-            System.out.println("1. Buscar Recurso (Por Titulo o Autor)");
-            System.out.println("2. Volver al Menu Principal");
+            System.out.println("1. Crear Recurso");
+            System.out.println("2. Eliminar Recurso");
+            System.out.println("3. Buscar Recurso (Por Titulo o Autor)");
+            System.out.println("4. Volver al Menu Principal");
             System.out.print("Elija una opción: ");
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    gestorRecursos.buscarRecursos();
+                    menuCrearRecurso();
                     break;
                 case 2:
+                    gestorRecursos.eliminarRecurso();
+                    break;
+                case 3:
+                    gestorRecursos.buscarRecursos();
+                    break;
+                case 3:
                     continuar = false;
+            }
+        }
+    }
+
+    public void menuCrearRecurso() {
+        Scanner sc = new Scanner(System.in);
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("---Menu Crear Recurso---");
+            System.out.println("1. Crear Libro");
+            System.out.println("2. Crear Revista");
+            System.out.println("3. Crear Audiolibro");
+            System.out.println("4.Volver al menu de gestion de recursos");
+            System.out.print("Elija una opción: ");
+            int opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    Libro libro = Libro.crearLibro();
+                    gestorRecursos.crearRecurso(libro);
+                    break;
+                case 2:
+                    Revista revista = Revista.crearRevista();
+                    gestorRecursos.crearRecurso(revista);
+                    break;
+                case 3:
+                    Audiolibro audiolibro = Audiolibro.crearAudiolibro();
+                    gestorRecursos.crearRecurso(audiolibro);
+                    break;
             }
         }
     }
