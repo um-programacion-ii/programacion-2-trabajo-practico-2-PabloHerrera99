@@ -2,6 +2,8 @@ package modelos;
 
 import interfaces.InterfazRD;
 
+import java.util.Scanner;
+
 public abstract class RecursoDigital implements InterfazRD {
     private String titulo;
     private String autor;
@@ -33,6 +35,15 @@ public abstract class RecursoDigital implements InterfazRD {
             throw new IllegalArgumentException("Autor no puede estar vacio");
         }
         this.autor = autor;
+    }
+
+    protected static Object[] datosBasicos() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Titulo: ");
+        String titulo = sc.nextLine();
+        System.out.println("Autor: ");
+        String autor = sc.nextLine();
+        return new Object[]{titulo, autor};
     }
 
     @Override

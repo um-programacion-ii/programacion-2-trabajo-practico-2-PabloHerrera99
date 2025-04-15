@@ -1,5 +1,7 @@
 package modelos;
 
+import java.util.Scanner;
+
 public class Revista extends RecursoDigital {
     private String categoria;
     private int edicion;
@@ -35,5 +37,19 @@ public class Revista extends RecursoDigital {
         return super.toString() +
                 "\nCategoria: " + categoria +
                 "\nEdicion: " + edicion;
+    }
+    public static Revista crearRevista() {
+        Scanner sc = new Scanner(System.in);
+        Object[] datos = Libro.datosBasicos();
+        String titulo = (String) datos[0];
+        String autor = (String) datos[1];
+        System.out.println("Introduzca la categoría: ");
+        String categoria = sc.nextLine();
+        System.out.println("Introduzca el edición: ");
+        int edicion = sc.nextInt();
+        return new Revista(titulo,
+                            autor,
+                            categoria,
+                            edicion);
     }
 }

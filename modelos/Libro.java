@@ -1,6 +1,8 @@
 package modelos;
 
 
+import java.util.Scanner;
+
 public class Libro extends RecursoDigital {
     private String genero;
     private String saga;
@@ -32,5 +34,20 @@ public class Libro extends RecursoDigital {
         return super.toString() +
                 "\nGenero: " + genero +
                 "\nSaga: " + saga;
+    }
+    public static Libro crearLibro() {
+        Scanner sc = new Scanner(System.in);
+        Object[] datos = Libro.datosBasicos();
+        String titulo = (String) datos[0];
+        String autor = (String) datos[1];
+
+        System.out.println("Introduzca el genero: ");
+        String genero = sc.nextLine();
+        System.out.println("Introduzca el saga: ");
+        String saga = sc.nextLine();
+        return new Libro(titulo,
+                        autor,
+                        genero,
+                        saga);
     }
 }

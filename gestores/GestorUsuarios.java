@@ -54,7 +54,6 @@ public class GestorUsuarios {
         }
     }
 
-
     public void buscarUsuario() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el id del usuario buscado:");
