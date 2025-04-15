@@ -37,15 +37,6 @@ public abstract class RecursoDigital implements InterfazRD {
         this.autor = autor;
     }
 
-    protected static Object[] datosBasicos() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Titulo: ");
-        String titulo = sc.nextLine();
-        System.out.println("Autor: ");
-        String autor = sc.nextLine();
-        return new Object[]{titulo, autor};
-    }
-
     @Override
     public String toString() {
         return "Titulo: " + titulo +

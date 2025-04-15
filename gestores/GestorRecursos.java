@@ -28,10 +28,21 @@ public class GestorRecursos {
                 recursoDigital.remove(recurso);
                 System.out.println("El recurso eliminado");
                 eliminado = true;
+                break;
             }
         }
         if (!eliminado){
             System.out.println("El recurso no existe");
+        }
+    }
+    public void listarRecursos() {
+        if (recursoDigital.isEmpty()) {
+            System.out.println("No existe el recurso");
+            return;
+        }
+        for (RecursoDigital recurso : recursoDigital) {
+            System.out.println(recurso);
+            System.out.println("\n-----------------------------\n");
         }
     }
 

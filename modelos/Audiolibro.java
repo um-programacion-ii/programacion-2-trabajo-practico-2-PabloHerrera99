@@ -41,9 +41,10 @@ public class Audiolibro extends RecursoDigital {
 
     public static Audiolibro crearAudiolibro() {
         Scanner sc = new Scanner(System.in);
-        Object[] datos = Libro.datosBasicos();
-        String titulo = (String) datos[0];
-        String autor = (String) datos[1];
+        System.out.println("Ingrese el titulo: ");
+        String titulo = sc.nextLine();
+        System.out.println("Ingrese el autor: ");
+        String autor = sc.nextLine();
         System.out.println("Introduzca el idioma: ");
         String idioma = sc.nextLine();
         System.out.println("Introduzca el duración en minutos: ");
