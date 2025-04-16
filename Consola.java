@@ -20,11 +20,11 @@ public class Consola {
     public void menuPrincipal() {
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.println("----Menú Principal----");
-            System.out.println("1. Gestión de usuarios");
-            System.out.println("2. Gestión de recursos");
-            System.out.println("3. Salir");
-            System.out.print("Elija una opción: ");
+            System.out.println("---- Menú Principal ---- \n" +
+                    "1. Gestión de usuarios \n" +
+                    "2. Gestión de recursos \n" +
+                    "3. Salir \n" +
+                    "Elija una opción: ");
             int opcion = sc.nextInt();
 
             switch (opcion) {
@@ -44,12 +44,13 @@ public class Consola {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
         while (continuar) {
-            System.out.println("---Menu De Gestion de Usuarios---");
-            System.out.println("1. Crear Usuario");
-            System.out.println("2. Eliminar Usuario");
-            System.out.println("3. Buscar Usuario por ID");
-            System.out.println("4. Volver al Menu Principal");
-            System.out.print("Elija una opción: ");
+            System.out.println("--- Menu De Gestión de Usuarios --- \n" +
+                    "1. Crear Usuario \n" +
+                    "2. Eliminar Usuario \n" +
+                    "3. Listar Usuarios \n" +
+                    "4. Buscar Usuario por ID \n" +
+                    "5. Volver al Menu Principal \n" +
+                    "Elija una opción: ");
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
@@ -59,9 +60,12 @@ public class Consola {
                     gestorUsuarios.eliminarUsuario();
                     break;
                 case 3:
-                    gestorUsuarios.buscarUsuario();
+                    gestorUsuarios.listarUsuarios();
                     break;
                 case 4:
+                    gestorUsuarios.buscarUsuario();
+                    break;
+                case 5:
                     continuar = false;
                     break;
             }
@@ -71,12 +75,13 @@ public class Consola {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
         while (continuar) {
-            System.out.println("---Menu De Gestion de Recursos---");
-            System.out.println("1. Crear Recurso");
-            System.out.println("2. Eliminar Recurso");
-            System.out.println("3. Buscar Recurso (Por Titulo o Autor)");
-            System.out.println("4. Volver al Menu Principal");
-            System.out.print("Elija una opción: ");
+            System.out.println("--- Menu De Gestion de Recursos --- \n" +
+                    "1. Crear Recurso \n" +
+                    "2. Eliminar Recurso \n" +
+                    "3. Listar Recursos \n" +
+                    "4. Buscar Recurso (Por Titulo o Autor) \n" +
+                    "5. Volver al Menu Principal \n" +
+                    "Elija una opción:");
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
@@ -86,9 +91,12 @@ public class Consola {
                     gestorRecursos.eliminarRecurso();
                     break;
                 case 3:
+                    gestorRecursos.listarRecursos();
+                    break;
+                case 4:
                     gestorRecursos.buscarRecursos();
                     break;
-                case 3:
+                case 5:
                     continuar = false;
             }
         }
@@ -98,12 +106,12 @@ public class Consola {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
         while (continuar) {
-            System.out.println("---Menu Crear Recurso---");
-            System.out.println("1. Crear Libro");
-            System.out.println("2. Crear Revista");
-            System.out.println("3. Crear Audiolibro");
-            System.out.println("4.Volver al menu de gestion de recursos");
-            System.out.print("Elija una opción: ");
+            System.out.println("--- Menu Crear Recurso --- \n" +
+                    "1. Crear Libro \n" +
+                    "2. Crear Revista \n" +
+                    "3. Crear Audiolibro \n" +
+                    "4.Volver al menu de gestión de recursos \n" +
+                    "Elija una opción: ");
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
@@ -117,6 +125,9 @@ public class Consola {
                 case 3:
                     Audiolibro audiolibro = Audiolibro.crearAudiolibro();
                     gestorRecursos.crearRecurso(audiolibro);
+                    break;
+                case 4:
+                    continuar = false;
                     break;
             }
         }
