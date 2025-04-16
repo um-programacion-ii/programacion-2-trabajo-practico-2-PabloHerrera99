@@ -1,11 +1,13 @@
 package modelos;
 
+import interfaces.Renovable;
 
 import java.util.Scanner;
 
-public class Libro extends RecursoDigital {
+public class Libro extends RecursoDigital implements Renovable {
     private String genero;
     private String saga;
+
 
     public Libro(String titulo, String autor, String genero, String saga) {
         super(titulo, autor);
@@ -35,13 +37,13 @@ public class Libro extends RecursoDigital {
                 "\nGenero: " + genero +
                 "\nSaga: " + saga;
     }
+
     public static Libro crearLibro() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo: ");
         String titulo = sc.nextLine();
         System.out.println("Ingrese el autor: ");
         String autor = sc.nextLine();
-
         System.out.println("Introduzca el genero: ");
         String genero = sc.nextLine();
         System.out.println("Introduzca el saga: ");
@@ -50,5 +52,12 @@ public class Libro extends RecursoDigital {
                         autor,
                         genero,
                         saga);
+    }
+
+    @Override
+    public void renovar() {
+        if (prestado) {
+            prestado = false;
+        }
     }
 }
