@@ -1,14 +1,10 @@
 package modelos;
 
-import interfaces.InterfazRD;
-import interfaces.Prestable;
-
 import java.util.Scanner;
 
-public class Revista extends RecursoDigital implements Prestable {
+public class Revista extends RecursoDigital {
     private String categoria;
     private int edicion;
-    private boolean prestado;
 
     public Revista(String titulo, String autor, String categoria, int edicion) {
         super(titulo, autor);
@@ -56,25 +52,5 @@ public class Revista extends RecursoDigital implements Prestable {
                             autor,
                             categoria,
                             edicion);
-    }
-
-    @Override
-    public void prestar() {
-        if (!prestado) {
-            prestado = true;
-            System.out.println("La revista fue prestada correctamente");
-        }else {
-            System.out.println("La revista ya esta prestada");
-        }
-    }
-
-    @Override
-    public void devolver() {
-        if (prestado) {
-            prestado = false;
-            System.out.println("La revista fue devuelta correctamente");
-        } else {
-            System.out.println("La revista ya esta devuelta");
-        }
     }
 }
