@@ -1,3 +1,5 @@
+import Servicios.ServicioNotificacionesEmail;
+import interfaces.ServicioNotificaciones;
 import modelos.*;
 import gestores.GestorUsuarios;
 import gestores.GestorRecursos;
@@ -13,8 +15,9 @@ public class Consola {
     public Consola() {
         List<Usuario> usuarios = new ArrayList<>();
         List<RecursoDigital> recursos = new ArrayList<>();
-        this.gestorUsuarios = new GestorUsuarios(usuarios);
-        this.gestorRecursos = new GestorRecursos(recursos);
+        ServicioNotificaciones notificacion = new ServicioNotificacionesEmail();
+        this.gestorUsuarios = new GestorUsuarios(usuarios, notificacion);
+        this.gestorRecursos = new GestorRecursos(recursos, notificacion);
     }
 
     public void menuPrincipal() {
@@ -99,10 +102,10 @@ public class Consola {
                     gestorRecursos.buscarRecursos();
                     break;
                 case 5:
-                    System.out.println("Préstamo");
+                    gestorRecursos.prestarRecurso();
                     break;
                 case 6:
-                    System.out.println("Renovar libro");
+                    gestorRecursos.renovarRecurso();
                     break;
                 case 7:
                     continuar = false;
@@ -138,6 +141,33 @@ public class Consola {
                 case 4:
                     continuar = false;
                     break;
+            }
+        }
+    }
+    public void menuPrestamos () {
+        Scanner sc = new Scanner(System.in);
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("---Menu Prestamos---\n" +
+                    "1. Pedir prestado un recurso \n" +
+                    "2. Renovar recurso \n" +
+                    "3. Devolver recurso \n" +
+                    "4. Volver al Menu Principal \n" +
+                    "Elija una opción:");
+            int opcion = sc.nextInt();
+            switch (opcion) {
+                case 1:
+                    gestorRecursos.prestarRecurso();
+                    break;
+                case 2:
+                    gestorRecursos.renovarRecurso();
+                    break;
+                case 3:
+                    gestorRecursos.devolverRecurso();
+                case 4:
+                    continuar = false;
+                    break;
+
             }
         }
     }

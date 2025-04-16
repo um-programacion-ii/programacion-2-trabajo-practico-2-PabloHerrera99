@@ -1,18 +1,24 @@
 package gestores;
 
+import interfaces.Prestable;
+import interfaces.Renovable;
+import interfaces.ServicioNotificaciones;
 import modelos.Audiolibro;
 import modelos.Libro;
 import modelos.RecursoDigital;
 import modelos.Revista;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
 public class GestorRecursos {
     private List<RecursoDigital> recursoDigital;
+    private ServicioNotificaciones notificacion;
 
-    public GestorRecursos(List<RecursoDigital> recursoDigital){
+    public GestorRecursos(List<RecursoDigital> recursoDigital, ServicioNotificaciones notificacion) {
         this.recursoDigital = recursoDigital;
+        this.notificacion = notificacion;
     }
 
     public void crearRecurso(RecursoDigital recurso){
@@ -79,6 +85,56 @@ public class GestorRecursos {
         }
         if (!encontrado){
             System.out.println("El recurso no existe");
+        }
+    }
+
+    public void prestarRecurso () {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el titulo del recurso que quiere prestar:");
+        String titulo = sc.nextLine();
+
+        for (RecursoDigital recurso : recursoDigital) {
+            if (recurso.getTitulo().equals(titulo) && recurso instanceof Prestable && !recurso.getPrestado()) {
+                recurso.prestar();
+                notificacion.enviarNotificacion("Recurso prestado:"+
+                                                recurso +
+                                                "\n-----------------------\n" +
+                                                "Fecha de entrega:" + recurso.getFechaEntrega());
+            } else if (recurso.getPrestado()) {
+                System.out.println("El recurso ya esta prestado");
+            }
+        }
+    }
+    public void renovarRecurso() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el titulo del recurso a renovar:");
+        String titulo = sc.nextLine();
+        for (RecursoDigital recurso : recursoDigital) {
+            if (recurso.getTitulo().equals(titulo) && recurso instanceof Renovable) {
+                ((Renovable) recurso).renovar();
+                notificacion.enviarNotificacion("Recurso renovado:"+
+                                                recurso +
+                                                "\n-----------------------\n" +
+                                                "Fecha de entrega nueva:" + recurso.getFechaEntrega());;
+            }
+        }
+    }
+    public void devolverRecurso() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el titulo del recurso a devolver:");
+        String titulo = sc.nextLine();
+        for (RecursoDigital recurso : recursoDigital) {
+            if (recurso.getTitulo().equals(titulo) && recurso.getPrestado()) {
+                recurso.devolver();
+                notificacion.enviarNotificacion("El recurso " + recurso.getTitulo() + " ha sido devuelto");
+                break;
+            //    if (recurso.getFechaEntrega() ) {
+            //        notificacion.enviarNotificacion("El recurso " + recurso.getTitulo() + " ha sido devuelto a tiempo");
+            //    }else {
+            //        notificacion.enviarNotificacion("El recurso " + recurso.getTitulo() + " no ha sido devuelto con atrasado");
+            //    }
+
+            }
         }
     }
 }

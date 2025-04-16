@@ -1,5 +1,6 @@
 package gestores;
 
+import interfaces.ServicioNotificaciones;
 import modelos.Usuario;
 
 import java.util.ArrayList;
@@ -8,9 +9,11 @@ import java.util.Scanner;
 
 public class GestorUsuarios {
     private List<Usuario> usuarios;
+    private ServicioNotificaciones notificacion;
 
-    public GestorUsuarios(List<Usuario> usuarios) {
+    public GestorUsuarios(List<Usuario> usuarios, ServicioNotificaciones notificacion) {
         this.usuarios = usuarios;
+        this.notificacion = notificacion;
     }
 
     public void registrarUsuario(){
@@ -32,15 +35,20 @@ public class GestorUsuarios {
 
             System.out.println("Ingrese el email del nuevo usuario:");
             String email = sc.nextLine();
+            System.out.println("Ingrese el telefono del nuevo usuario:");
+            int telefono = sc.nextInt();
 
-            Usuario usuario = new Usuario(nombre, id, email);
+            Usuario usuario = new Usuario(nombre, id, email, telefono);
             usuarios.add(usuario);
+
+            System.out.println("Usuario registrado");
+            notificacion.enviarNotificacion("Usuario registrado, datos de usuario:\n"+
+                    usuario);
         }
         catch (IllegalArgumentException error){
             System.out.println(error.getMessage());
             System.out.println("Datos invalidos, intentelo nuevamente");
         }
-        System.out.println("Usuario registrado");
     }
 
     public void eliminarUsuario(){
