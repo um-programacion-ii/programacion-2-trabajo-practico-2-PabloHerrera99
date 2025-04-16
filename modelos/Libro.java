@@ -1,11 +1,15 @@
 package modelos;
 
 
+import interfaces.InterfazRD;
+import interfaces.Prestable;
+
 import java.util.Scanner;
 
-public class Libro extends RecursoDigital {
+public class Libro extends RecursoDigital implements Prestable {
     private String genero;
     private String saga;
+    private boolean prestado = false;
 
     public Libro(String titulo, String autor, String genero, String saga) {
         super(titulo, autor);
@@ -35,6 +39,7 @@ public class Libro extends RecursoDigital {
                 "\nGenero: " + genero +
                 "\nSaga: " + saga;
     }
+
     public static Libro crearLibro() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo: ");
@@ -50,5 +55,25 @@ public class Libro extends RecursoDigital {
                         autor,
                         genero,
                         saga);
+    }
+
+    @Override
+    public void prestar() {
+        if (!prestado) {
+            prestado = true;
+            System.out.println("El libro fue prestado correctamente");
+        }else {
+            System.out.println("El libro ya esta prestado");
+        }
+    }
+
+    @Override
+    public void devolver() {
+        if (prestado) {
+            prestado = false;
+            System.out.println("El libro fue devuelto correctamente");
+        } else {
+            System.out.println("El libro ya esta devuelto");
+        }
     }
 }
