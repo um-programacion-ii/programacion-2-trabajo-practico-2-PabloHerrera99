@@ -1,7 +1,9 @@
 package modelos;
 
 import interfaces.Renovable;
+import interfaces.ServicioNotificaciones;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Libro extends RecursoDigital implements Renovable {
@@ -58,6 +60,7 @@ public class Libro extends RecursoDigital implements Renovable {
     public void renovar() {
         if (prestado) {
             prestado = false;
+            fechaEntrega = fechaEntrega.plusDays(7);
         }
     }
 }

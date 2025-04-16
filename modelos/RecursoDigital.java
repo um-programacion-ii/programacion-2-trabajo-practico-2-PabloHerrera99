@@ -3,16 +3,19 @@ package modelos;
 import interfaces.InterfazRD;
 import interfaces.Prestable;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public abstract class RecursoDigital implements InterfazRD, Prestable {
     protected String titulo;
     protected String autor;
     protected boolean prestado;
+    protected LocalDate fechaEntrega;
 
     public RecursoDigital(String titulo, String autor) {
         setTitulo(titulo);
         setAutor(autor);
+
     }
 
     @Override
@@ -23,6 +26,14 @@ public abstract class RecursoDigital implements InterfazRD, Prestable {
     @Override
     public String getAutor() {
         return autor;
+    }
+
+    public LocalDate getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public boolean getPrestado() {
+        return prestado;
     }
 
     public void setTitulo(String titulo) {
@@ -49,9 +60,7 @@ public abstract class RecursoDigital implements InterfazRD, Prestable {
     public void prestar() {
         if (!prestado) {
             prestado = true;
-            System.out.println("El recurso fue prestado correctamente");
-        }else {
-            System.out.println("El recurso ya esta prestado");
+            fechaEntrega = LocalDate.now().plusDays(7);
         }
     }
 
@@ -59,9 +68,6 @@ public abstract class RecursoDigital implements InterfazRD, Prestable {
     public void devolver() {
         if (prestado) {
             prestado = false;
-            System.out.println("El recurso fue devuelto correctamente");
-        } else {
-            System.out.println("El recurso ya esta devuelto");
         }
     }
 }
