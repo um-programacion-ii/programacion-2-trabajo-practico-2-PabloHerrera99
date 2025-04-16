@@ -80,7 +80,9 @@ public class Consola {
                     "2. Eliminar Recurso \n" +
                     "3. Listar Recursos \n" +
                     "4. Buscar Recurso (Por Titulo o Autor) \n" +
-                    "5. Volver al Menu Principal \n" +
+                    "5. Pedir prestado un libro \n" +
+                    "6. Renovar libro \n" +
+                    "7. Volver al Menu Principal \n" +
                     "Elija una opción:");
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -97,7 +99,14 @@ public class Consola {
                     gestorRecursos.buscarRecursos();
                     break;
                 case 5:
+                    System.out.println("Préstamo");
+                    break;
+                case 6:
+                    System.out.println("Renovar libro");
+                    break;
+                case 7:
                     continuar = false;
+                    break;
             }
         }
     }

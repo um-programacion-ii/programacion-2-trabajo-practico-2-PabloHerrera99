@@ -44,7 +44,6 @@ public class Libro extends RecursoDigital implements Renovable {
         String titulo = sc.nextLine();
         System.out.println("Ingrese el autor: ");
         String autor = sc.nextLine();
-
         System.out.println("Introduzca el genero: ");
         String genero = sc.nextLine();
         System.out.println("Introduzca el saga: ");
