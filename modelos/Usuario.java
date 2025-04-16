@@ -4,11 +4,13 @@ public class Usuario {
     private String nombre;
     private int id;
     private String email;
+    private int telefono;
 
-    public Usuario(String nombre, int id, String email) {
+    public Usuario(String nombre, int id, String email, int telefono) {
         setNombre(nombre);
         setId(id);
         setEmail(email);
+        setTelefono(telefono);
     }
 
     public String getNombre() {
@@ -41,10 +43,21 @@ public class Usuario {
         this.email = email;
     }
 
+    public int getTelefono() {
+        return telefono;
+    }
+    public void setTelefono(int telefono) {
+        if (telefono < 0) {
+            throw new IllegalArgumentException("El telefono no puede estar vacio");
+        }
+        this.telefono = telefono;
+    }
+
     @Override
     public String toString() {
         return "Id: " + id +
                 "\nUsuario: "+ nombre +
-                "\nEmail: " + email;
+                "\nEmail: " + email +
+                "\nTelefono: " + telefono;
     }
 }

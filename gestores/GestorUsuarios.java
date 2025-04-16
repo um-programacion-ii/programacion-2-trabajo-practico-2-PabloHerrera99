@@ -32,9 +32,12 @@ public class GestorUsuarios {
 
             System.out.println("Ingrese el email del nuevo usuario:");
             String email = sc.nextLine();
+            System.out.println("Ingrese el telefono del nuevo usuario:");
+            int telefono = sc.nextInt();
 
-            Usuario usuario = new Usuario(nombre, id, email);
+            Usuario usuario = new Usuario(nombre, id, email, telefono);
             usuarios.add(usuario);
+
         }
         catch (IllegalArgumentException error){
             System.out.println(error.getMessage());
