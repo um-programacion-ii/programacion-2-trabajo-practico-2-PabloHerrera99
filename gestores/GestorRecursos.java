@@ -1,11 +1,12 @@
 package gestores;
 
+import modelos.Audiolibro;
+import modelos.Libro;
 import modelos.RecursoDigital;
+import modelos.Revista;
 
 import java.util.List;
 import java.util.Scanner;
-
-
 
 public class GestorRecursos {
     private List<RecursoDigital> recursoDigital;
@@ -36,12 +37,25 @@ public class GestorRecursos {
         }
     }
     public void listarRecursos() {
+        Scanner sc = new Scanner(System.in);
         if (recursoDigital.isEmpty()) {
-            System.out.println("No existe el recurso");
+            System.out.println("No existen recursos");
             return;
         }
+        System.out.println("Inserte que tipos de recursos desea listar (libros, revistas o audiolibros)\n" +
+                "deje la opción el blanco para listar todos los recursos:");
+        String tipo = sc.nextLine();
+
         for (RecursoDigital recurso : recursoDigital) {
-            System.out.println(recurso);
+            if (tipo.equals("libros") && recurso instanceof Libro) {
+                System.out.println(recurso);
+            } else if (tipo.equals("revistas") && recurso instanceof Revista) {
+                System.out.println(recurso);
+            } else if (tipo.equals("audiolibros") && recurso instanceof Audiolibro) {
+                System.out.println(recurso);
+            } else if (tipo.isEmpty()) {
+                System.out.println(recurso);
+            }
             System.out.println("\n-----------------------------\n");
         }
     }

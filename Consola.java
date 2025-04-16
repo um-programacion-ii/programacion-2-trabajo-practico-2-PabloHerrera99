@@ -47,8 +47,9 @@ public class Consola {
             System.out.println("--- Menu De Gestión de Usuarios --- \n" +
                     "1. Crear Usuario \n" +
                     "2. Eliminar Usuario \n" +
-                    "3. Buscar Usuario por ID \n" +
-                    "4. Volver al Menu Principal \n" +
+                    "3. Listar Usuarios \n" +
+                    "4. Buscar Usuario por ID \n" +
+                    "5. Volver al Menu Principal \n" +
                     "Elija una opción: ");
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -59,9 +60,12 @@ public class Consola {
                     gestorUsuarios.eliminarUsuario();
                     break;
                 case 3:
-                    gestorUsuarios.buscarUsuario();
+                    gestorUsuarios.listarUsuarios();
                     break;
                 case 4:
+                    gestorUsuarios.buscarUsuario();
+                    break;
+                case 5:
                     continuar = false;
                     break;
             }

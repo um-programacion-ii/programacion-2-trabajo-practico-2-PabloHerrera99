@@ -7,6 +7,8 @@ import java.util.Scanner;
 public abstract class RecursoDigital implements InterfazRD {
     private String titulo;
     private String autor;
+    private boolean prestable;
+    private boolean renovable;
 
     public RecursoDigital(String titulo, String autor) {
         setTitulo(titulo);
