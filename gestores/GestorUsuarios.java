@@ -6,12 +6,13 @@ import modelos.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Map;
 
 public class GestorUsuarios {
-    private List<Usuario> usuarios;
+    private Map<Integer, Usuario> usuarios;
     private ServicioNotificaciones notificacion;
 
-    public GestorUsuarios(List<Usuario> usuarios, ServicioNotificaciones notificacion) {
+    public GestorUsuarios(Map<Integer, Usuario> usuarios, ServicioNotificaciones notificacion) {
         this.usuarios = usuarios;
         this.notificacion = notificacion;
     }
@@ -26,7 +27,7 @@ public class GestorUsuarios {
             // Encontrar Id sin usar (revisar)
             int id = 1;
             List<Integer> idUsados = new ArrayList<>();
-            for (Usuario usuario : usuarios) {
+            for (Usuario usuario : usuarios.values()) {
                 idUsados.add(usuario.getId());
             }
             while (idUsados.contains(id)) {
@@ -39,7 +40,7 @@ public class GestorUsuarios {
             int telefono = sc.nextInt();
 
             Usuario usuario = new Usuario(nombre, id, email, telefono);
-            usuarios.add(usuario);
+            usuarios.put(usuario.getId(), usuario);
 
             System.out.println("Usuario registrado");
             notificacion.enviarNotificacion("Usuario registrado, datos de usuario:\n"+
@@ -55,17 +56,12 @@ public class GestorUsuarios {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el id del usuario que quiere eliminar:");
         int id = sc.nextInt();
-        boolean eliminado = false;
-        for (Usuario usuario : usuarios) {
-            if (usuario.getId() == id) {
-                usuarios.remove(usuario);
-                System.out.println("Usuario eliminado");
-                eliminado = true;
-                break;
-            }
-        }
-        if (!eliminado) {
-            System.out.println("El usuario no existe");
+        Usuario usuario = usuarios.get(id);
+        if (usuario != null) {
+            usuarios.remove(id);
+            notificacion.enviarNotificacion("Usuario: " + usuario.getNombre() + " eliminado");
+        }else {
+            System.out.println("Usuario no encontrado");
         }
     }
 
@@ -73,23 +69,18 @@ public class GestorUsuarios {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el id del usuario buscado:");
         int id = sc.nextInt();
-        boolean encontrado = false;
-        for (Usuario usuario : usuarios) {
-            if (usuario.getId() == id) {
-                System.out.println("Usuario encontrado: \n" + usuario);
-                encontrado = true;
-                break;
-            }
+        if (!usuarios.containsKey(id)) {
+            throw new IllegalArgumentException("No existe el usuario con el id " + id);
         }
-        if (!encontrado) {
-            System.out.println("El usuario con el ID: " + id + " no existe en la base de datos");
-        }
+        System.out.println("Usuario encontrado:\n" +
+                usuarios.get(id) +
+                "\n--------------------------------");
     }
 
     public void listarUsuarios() {
-        for (Usuario usuario : usuarios) {
-            System.out.println(usuario);
-            System.out.println("\n------------------------\n");
+        for (Usuario usuario : usuarios.values()) {
+            System.out.println(usuario +
+                    "\n-----------------\n");
         }
     }
 }

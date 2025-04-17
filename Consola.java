@@ -4,16 +4,14 @@ import modelos.*;
 import gestores.GestorUsuarios;
 import gestores.GestorRecursos;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Consola {
     private GestorUsuarios gestorUsuarios;
     private GestorRecursos gestorRecursos;
 
     public Consola() {
-        List<Usuario> usuarios = new ArrayList<>();
+        Map<Integer, Usuario> usuarios = new HashMap<>();
         List<RecursoDigital> recursos = new ArrayList<>();
         ServicioNotificaciones notificacion = new ServicioNotificacionesEmail();
         this.gestorUsuarios = new GestorUsuarios(usuarios, notificacion);
@@ -74,6 +72,7 @@ public class Consola {
             }
         }
     }
+
     private void menuGestionRecursos() {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
@@ -113,7 +112,6 @@ public class Consola {
             }
         }
     }
-
     public void menuCrearRecurso() {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
