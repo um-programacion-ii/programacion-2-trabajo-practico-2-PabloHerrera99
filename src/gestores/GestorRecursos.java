@@ -10,6 +10,7 @@ import src.modelos.Revista;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GestorRecursos {
     private List<RecursoDigital> recursoDigital;
@@ -67,24 +68,19 @@ public class GestorRecursos {
 
     public void buscarRecursos(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese el parametro de busqueda (Titulo o Autor):");
-        String parametro = sc.nextLine();
-        boolean encontrado = false;
-        for(RecursoDigital recurso : recursoDigital){
-            if(recurso.getTitulo().equalsIgnoreCase(parametro)){
-                System.out.println(recurso);
-                encontrado = true;
-                break;
-            }
-            if (recurso.getAutor().equalsIgnoreCase(parametro)){
-                System.out.println(recurso);
-                encontrado = true;
-                break;
-            }
-        }
-        if (!encontrado){
+        System.out.println("Ingrese el titulo del recurso que desea buscar:");
+        String titulo = sc.nextLine();
+        List<RecursoDigital> filtrados = recursoDigital.stream()
+                .filter(r -> r.getTitulo().equalsIgnoreCase(titulo))
+                .collect(Collectors.toList());
+        if (filtrados.isEmpty()) {
             System.out.println("El recurso no existe");
+        }else {
+            System.out.println("Recursos encontrados:");
+            filtrados.forEach(System.out::println);
         }
+
+
     }
 
     public void prestarRecurso () {
@@ -127,11 +123,7 @@ public class GestorRecursos {
                 recurso.devolver();
                 notificacion.enviarNotificacion("El recurso " + recurso.getTitulo() + " ha sido devuelto");
                 break;
-            //    if (recurso.getFechaEntrega() ) {
-            //        notificacion.enviarNotificacion("El recurso " + recurso.getTitulo() + " ha sido devuelto a tiempo");
-            //    }else {
-            //        notificacion.enviarNotificacion("El recurso " + recurso.getTitulo() + " no ha sido devuelto con atrasado");
-            //    }
+
 
             }
         }
