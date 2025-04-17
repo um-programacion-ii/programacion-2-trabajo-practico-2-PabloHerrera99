@@ -1,6 +1,6 @@
-package Servicios;
+package src.Servicios;
 
-import interfaces.ServicioNotificaciones;
+import src.interfaces.ServicioNotificaciones;
 
 public class ServicioNotificacionesSMS implements ServicioNotificaciones {
     public void enviarNotificacion(String mensaje) {

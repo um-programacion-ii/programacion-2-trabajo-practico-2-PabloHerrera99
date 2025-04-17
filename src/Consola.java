@@ -1,8 +1,10 @@
-import Servicios.ServicioNotificacionesEmail;
-import interfaces.ServicioNotificaciones;
-import modelos.*;
-import gestores.GestorUsuarios;
-import gestores.GestorRecursos;
+package src;
+
+import src.Servicios.ServicioNotificacionesEmail;
+import src.interfaces.ServicioNotificaciones;
+import src.modelos.*;
+import src.gestores.GestorUsuarios;
+import src.gestores.GestorRecursos;
 
 import java.util.*;
 
@@ -82,9 +84,8 @@ public class Consola {
                     "2. Eliminar Recurso \n" +
                     "3. Listar Recursos \n" +
                     "4. Buscar Recurso (Por Titulo o Autor) \n" +
-                    "5. Pedir prestado un libro \n" +
-                    "6. Renovar libro \n" +
-                    "7. Volver al Menu Principal \n" +
+                    "5. Gestionar prestamos de recursos \n" +
+                    "6. Volver al Menu Principal \n" +
                     "Elija una opción:");
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -101,12 +102,9 @@ public class Consola {
                     gestorRecursos.buscarRecursos();
                     break;
                 case 5:
-                    gestorRecursos.prestarRecurso();
+                    menuPrestamos();
                     break;
                 case 6:
-                    gestorRecursos.renovarRecurso();
-                    break;
-                case 7:
                     continuar = false;
                     break;
             }
@@ -150,7 +148,8 @@ public class Consola {
                     "1. Pedir prestado un recurso \n" +
                     "2. Renovar recurso \n" +
                     "3. Devolver recurso \n" +
-                    "4. Volver al Menu Principal \n" +
+                    "4. Listar recursos prestables \n" +
+                    "5. Volver al Menu Principal \n" +
                     "Elija una opción:");
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -162,7 +161,10 @@ public class Consola {
                     break;
                 case 3:
                     gestorRecursos.devolverRecurso();
+                    break;
                 case 4:
+                    gestorRecursos.listaPrestables();
+                case 5:
                     continuar = false;
                     break;
 
