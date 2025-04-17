@@ -1,7 +1,7 @@
-package gestores;
+package src.gestores;
 
-import interfaces.ServicioNotificaciones;
-import modelos.Usuario;
+import src.interfaces.ServicioNotificaciones;
+import src.modelos.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;

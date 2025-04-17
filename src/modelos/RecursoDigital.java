@@ -1,10 +1,9 @@
-package modelos;
+package src.modelos;
 
-import interfaces.InterfazRD;
-import interfaces.Prestable;
+import src.interfaces.InterfazRD;
+import src.interfaces.Prestable;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public abstract class RecursoDigital implements InterfazRD, Prestable {
     protected String titulo;

@@ -1,14 +1,13 @@
-package gestores;
+package src.gestores;
 
-import interfaces.Prestable;
-import interfaces.Renovable;
-import interfaces.ServicioNotificaciones;
-import modelos.Audiolibro;
-import modelos.Libro;
-import modelos.RecursoDigital;
-import modelos.Revista;
+import src.interfaces.Prestable;
+import src.interfaces.Renovable;
+import src.interfaces.ServicioNotificaciones;
+import src.modelos.Audiolibro;
+import src.modelos.Libro;
+import src.modelos.RecursoDigital;
+import src.modelos.Revista;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -136,5 +135,22 @@ public class GestorRecursos {
 
             }
         }
+    }
+    public void listaPrestables() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Recursos prestables Disponibles:");
+       for (RecursoDigital recurso : recursoDigital) {
+           if (!recurso.getPrestado()) {
+               System.out.println(recurso +
+                       "\n-------------\n");
+           }
+       }
+       System.out.println("ReCursos prestables no Disponibles:");
+       for (RecursoDigital recurso : recursoDigital) {
+           if (recurso.getPrestado()) {
+               System.out.println(recurso +
+                       "\n-------------\n");
+           }
+       }
     }
 }

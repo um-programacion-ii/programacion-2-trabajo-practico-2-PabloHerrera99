@@ -1,9 +1,7 @@
-package modelos;
+package src.modelos;
 
-import interfaces.Renovable;
-import interfaces.ServicioNotificaciones;
+import src.interfaces.Renovable;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Libro extends RecursoDigital implements Renovable {

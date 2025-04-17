@@ -54,12 +54,12 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
   - Ordenamiento de resultados
 
 #### 2. Gestión de Usuarios
-- **Registrar modelos.Usuario**:
+- **Registrar src.modelos.Usuario**:
   - Proceso de registro de nuevos usuarios
   - Validación de datos del usuario
   - Verificación del registro exitoso
 
-- **Buscar modelos.Usuario**:
+- **Buscar src.modelos.Usuario**:
   - Proceso de búsqueda de usuarios
   - Visualización de información del usuario
   - Manejo de usuarios no encontrados
@@ -127,21 +127,21 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 
 ### Etapa 1: Diseño Base y Principios SOLID
 - **SRP**: 
-  - Crear clase `modelos.Usuario` con atributos básicos (nombre, ID, email)
-  - Crear clase `modelos.RecursoDigital` como clase base abstracta
+  - Crear clase `src.modelos.Usuario` con atributos básicos (nombre, ID, email)
+  - Crear clase `src.modelos.RecursoDigital` como clase base abstracta
   - Implementar clase `GestorUsuarios` separada de `GestorRecursos`
   - Cada clase debe tener una única responsabilidad clara
-  - Implementar clase `Consola` para manejar la interacción con el usuario
+  - Implementar clase `src.Consola` para manejar la interacción con el usuario
 
 - **OCP**: 
-  - Diseñar interfaz `modelos.RecursoDigital` con métodos comunes
+  - Diseñar interfaz `src.modelos.RecursoDigital` con métodos comunes
   - Implementar clases concretas `Libro`, `Revista`, `Audiolibro`
   - Usar herencia para extender funcionalidad sin modificar código existente
   - Ejemplo: agregar nuevo tipo de recurso sin cambiar clases existentes
   - Implementar menú de consola extensible para nuevos tipos de recursos
 
 - **LSP**: 
-  - Asegurar que todas las subclases de `modelos.RecursoDigital` puedan usarse donde se espera `modelos.RecursoDigital`
+  - Asegurar que todas las subclases de `src.modelos.RecursoDigital` puedan usarse donde se espera `src.modelos.RecursoDigital`
   - Implementar métodos comunes en la clase base
   - Validar que el comportamiento sea consistente en todas las subclases
   - Crear métodos de visualización en consola para todos los tipos de recursos
@@ -149,7 +149,7 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 - **ISP**: 
   - Crear interfaz `Prestable` para recursos que se pueden prestar
   - Crear interfaz `Renovable` para recursos que permiten renovación
-  - Implementar solo las interfaces necesarias en cada clase
+  - Implementar solo las src.interfaces necesarias en cada clase
   - Diseñar menús de consola específicos para cada tipo de operación
 
 - **DIP**: 
@@ -160,8 +160,8 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 
 ### Etapa 2: Gestión de Recursos y Colecciones
 - Implementar colecciones:
-  - Usar `ArrayList<modelos.RecursoDigital>` para almacenar recursos
-  - Usar `Map<String, modelos.Usuario>` para gestionar usuarios
+  - Usar `ArrayList<src.modelos.RecursoDigital>` para almacenar recursos
+  - Usar `Map<String, src.modelos.Usuario>` para gestionar usuarios
   - Implementar métodos de búsqueda básicos
   - Crear menú de consola para gestión de recursos
 
@@ -245,13 +245,15 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 ### 1. Estructura Base
 
 ```java
-// interfaces principales
-public interface modelos.RecursoDigital {
-    String getIdentificador();
+// src.interfaces principales
+public interface modelos.
 
-    EstadoRecurso getEstado();
+RecursoDigital {
+    String getIdentificador ();
 
-    void actualizarEstado(EstadoRecurso estado);
+    EstadoRecurso getEstado ();
+
+    void actualizarEstado (EstadoRecurso estado);
 }
 
 public interface Prestable {
@@ -269,7 +271,7 @@ public interface Notificable {
 }
 
 // Clase base abstracta
-public abstract class RecursoBase implements modelos.RecursoDigital, Prestable {
+public abstract class RecursoBase implements src.modelos.RecursoDigital, Prestable {
     // Implementación común
 }
 ```
@@ -277,7 +279,7 @@ public abstract class RecursoBase implements modelos.RecursoDigital, Prestable {
 ### 2. Gestión de Biblioteca
 
 ```java
-import modelos.RecursoDigital;
+import src.modelos.RecursoDigital;
 
 public class GestorBiblioteca {
     private final Map<String, RecursoDigital> recursos;
@@ -299,7 +301,7 @@ public class SistemaPrestamos {
 ## ✅ Entrega y Flujo de Trabajo con GitHub
 
 1. **Configuración del Repositorio**
-   - Proteger la rama `Main`
+   - Proteger la rama `src.Main`
    - Crear template de Issues y Pull Requests
 
 2. **Project Kanban**
