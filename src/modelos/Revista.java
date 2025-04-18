@@ -1,6 +1,6 @@
 package src.modelos;
 
-import src.enums.TipoRecurso;
+import src.enums.CategoriaRecurso;
 
 import java.util.List;
 import java.util.Scanner;
@@ -52,10 +52,10 @@ public class Revista extends RecursoDigital {
     }
 
     @Override
-    public List<TipoRecurso> getTipo() {
+    public List<CategoriaRecurso> getTipo() {
         return List.of(
-                TipoRecurso.REVISTA,
-                TipoRecurso.PRESTABLE
+                CategoriaRecurso.REVISTA,
+                CategoriaRecurso.PRESTABLE
         );
     }
     @Override

@@ -1,6 +1,6 @@
 package src.enums;
 
-public enum TipoRecurso {
+public enum CategoriaRecurso {
     LIBRO,
     REVISTA,
     AUDIOLIBRO,

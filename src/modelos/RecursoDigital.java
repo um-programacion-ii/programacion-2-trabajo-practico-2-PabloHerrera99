@@ -1,6 +1,6 @@
 package src.modelos;
 
-import src.enums.TipoRecurso;
+import src.enums.CategoriaRecurso;
 import src.interfaces.InterfazRD;
 import src.interfaces.Prestable;
 
@@ -17,7 +17,7 @@ public abstract class RecursoDigital implements InterfazRD, Prestable {
         setTitulo(titulo);
         setAutor(autor);
     }
-    public abstract List<TipoRecurso> getTipo();
+    public abstract List<CategoriaRecurso> getTipo();
 
     @Override
     public String getTitulo() {
