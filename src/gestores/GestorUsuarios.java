@@ -1,5 +1,6 @@
 package src.gestores;
 
+import src.excepciones.UsuarioNoEncontradoException;
 import src.interfaces.ServicioNotificaciones;
 import src.modelos.Usuario;
 
@@ -17,6 +18,9 @@ public class GestorUsuarios {
         this.notificacion = notificacion;
     }
 
+    public void addUsuario(Usuario usuario){
+        usuarios.put(usuario.getId(), usuario);
+    }
     public void registrarUsuario(){
         Scanner sc = new Scanner(System.in);
         try {
@@ -52,7 +56,7 @@ public class GestorUsuarios {
         }
     }
 
-    public void eliminarUsuario(){
+    public void eliminarUsuario() throws UsuarioNoEncontradoException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el id del usuario que quiere eliminar:");
         int id = sc.nextInt();
@@ -61,16 +65,16 @@ public class GestorUsuarios {
             usuarios.remove(id);
             notificacion.enviarNotificacion("Usuario: " + usuario.getNombre() + " eliminado");
         }else {
-            System.out.println("Usuario no encontrado");
+            throw new UsuarioNoEncontradoException("El Usuario con el id " + id + " no existe");
         }
     }
 
-    public void buscarUsuario() {
+    public void buscarUsuario()  throws UsuarioNoEncontradoException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el id del usuario buscado:");
         int id = sc.nextInt();
         if (!usuarios.containsKey(id)) {
-            throw new IllegalArgumentException("No existe el usuario con el id " + id);
+            throw new UsuarioNoEncontradoException("El Usuario con el id " + id + " no existe");
         }
         System.out.println("Usuario encontrado:\n" +
                 usuarios.get(id) +

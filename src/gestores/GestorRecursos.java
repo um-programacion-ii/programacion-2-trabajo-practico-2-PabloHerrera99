@@ -1,6 +1,7 @@
 package src.gestores;
 
 import src.enums.CategoriaRecurso;
+import src.excepciones.RecursoNoDisponibleException;
 import src.interfaces.Prestable;
 import src.interfaces.Renovable;
 import src.interfaces.ServicioNotificaciones;
@@ -19,10 +20,10 @@ public class GestorRecursos {
         this.notificacion = notificacion;
     }
 
-    public void crearRecurso(RecursoDigital recurso){
-        recursoDigital.add(recurso);
+    public void crearRecurso(RecursoDigital recurso) throws RecursoNoDisponibleException {
+            recursoDigital.add(recurso);
     }
-    public void eliminarRecurso(){
+    public void eliminarRecurso() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo del recurso que desea eliminar");
         boolean eliminado = false;
@@ -36,11 +37,11 @@ public class GestorRecursos {
             }
         }
         if (!eliminado){
-            System.out.println("El recurso no existe");
+            throw new RecursoNoDisponibleException("El recurso llamado " + titulo + " no exite");
         }
     }
     
-    public void listarRecursos() {
+    public void listarRecursos() throws RecursoNoDisponibleException {
         Scanner sc = new Scanner(System.in);
         if (recursoDigital.isEmpty()) {
             System.out.println("No existen recursos");
@@ -62,14 +63,14 @@ public class GestorRecursos {
             }
         }
         if (filtrados.isEmpty()) {
-            System.out.println("No existen recursos que coincidan con esos filtros");
+            throw new RecursoNoDisponibleException("No existe recurso que cumpla cpn esos parametros");
         }
         for (RecursoDigital recurso : filtrados) {
             System.out.println(recurso +
                     "\n------------------------\n");
         }
     }
-    public void buscarRecursos(){
+    public void buscarRecursos() throws RecursoNoDisponibleException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo del recurso que desea buscar:");
         String titulo = sc.nextLine();
@@ -77,7 +78,7 @@ public class GestorRecursos {
                 .filter(r -> r.getTitulo().equalsIgnoreCase(titulo))
                 .collect(Collectors.toList());
         if (filtrados.isEmpty()) {
-            System.out.println("El recurso no existe");
+            throw new RecursoNoDisponibleException("El recurso llamado " + titulo + " no exite");
         }else {
             System.out.println("Recursos coincidentes:");
             for (RecursoDigital recurso : filtrados) {
@@ -87,7 +88,7 @@ public class GestorRecursos {
         }
     }
 
-    public void prestarRecurso () {
+    public void prestarRecurso () throws RecursoNoDisponibleException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo del recurso que quiere prestar:");
         String titulo = sc.nextLine();
@@ -100,7 +101,7 @@ public class GestorRecursos {
                                                 "\n-----------------------\n" +
                                                 "Fecha de entrega:" + recurso.getFechaEntrega());
             } else if (recurso.getPrestado()) {
-                System.out.println("El recurso ya esta prestado");
+                throw new RecursoNoDisponibleException("El recurso " + titulo + " ya se encuentra prestado");
             }
         }
     }
