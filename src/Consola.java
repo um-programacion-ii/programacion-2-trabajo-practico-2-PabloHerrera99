@@ -18,6 +18,30 @@ public class Consola {
         ServicioNotificaciones notificacion = new ServicioNotificacionesEmail();
         this.gestorUsuarios = new GestorUsuarios(usuarios, notificacion);
         this.gestorRecursos = new GestorRecursos(recursos, notificacion);
+
+        // Pre-cargados
+        Libro l1 = new Libro("El Hobbit", "Tolkien", "Fantasía", "Saga Tolkien");
+        Libro l2 = new Libro("La comunidad del anillo", "Tolkien", "Fantasía", "El señor de los anillos");
+        Libro l3 = new Libro("Las dos torres", "Tolkien", "Fantasía", "El señor de los anillos");
+        Libro l4 = new Libro("El retorno del rey", "Tolkien", "Fantasía", "El señor de los anillos");
+
+        Revista r1 = new Revista("National Geographic", "NG Media", "Ciencia", 2025);
+        Audiolibro a1 = new Audiolibro("1984", "Orwell", "Español", 720);
+
+        gestorRecursos.crearRecurso(l1);
+        gestorRecursos.crearRecurso(l2);
+        gestorRecursos.crearRecurso(l3);
+        gestorRecursos.crearRecurso(l4);
+        gestorRecursos.crearRecurso(r1);
+        gestorRecursos.crearRecurso(a1);
+
+        Usuario u1 = new Usuario("Ana",1,  "ana@mail.com",123456789);
+        Usuario u2 = new Usuario("Pepe",2,  "pepe@mail.com",987654321);
+        Usuario u3 = new Usuario("Juan",3,  "juan@mail.com",678912345);
+        gestorUsuarios.addUsuario(u1);
+        gestorUsuarios.addUsuario(u2);
+        gestorUsuarios.addUsuario(u3);
+
     }
 
     public void menuPrincipal() {
@@ -57,7 +81,11 @@ public class Consola {
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    gestorUsuarios.registrarUsuario();
+                    try {
+                        gestorUsuarios.registrarUsuario();
+                    } catch (Exception e) {
+                        System.out.println("Error al registrar el usuario\n");
+                    }
                     break;
                 case 2:
                     gestorUsuarios.eliminarUsuario();
@@ -123,16 +151,28 @@ public class Consola {
             int opcion = sc.nextInt();
             switch (opcion) {
                 case 1:
-                    Libro libro = Libro.crearLibro();
-                    gestorRecursos.crearRecurso(libro);
+                    try {
+                        Libro libro = Libro.crearLibro();
+                        gestorRecursos.crearRecurso(libro);
+                    } catch (Exception e) {
+                        System.out.println("Error al crear libro");
+                    }
                     break;
                 case 2:
-                    Revista revista = Revista.crearRevista();
-                    gestorRecursos.crearRecurso(revista);
+                    try {
+                        Revista revista = Revista.crearRevista();
+                        gestorRecursos.crearRecurso(revista);
+                    } catch (Exception e) {
+                        System.out.println("Error al crear la revista \n");
+                    }
                     break;
                 case 3:
-                    Audiolibro audiolibro = Audiolibro.crearAudiolibro();
-                    gestorRecursos.crearRecurso(audiolibro);
+                    try {
+                        Audiolibro audiolibro = Audiolibro.crearAudiolibro();
+                        gestorRecursos.crearRecurso(audiolibro);
+                    } catch (Exception e) {
+                        System.out.println("Error al crear el audiolibro");
+                    }
                     break;
                 case 4:
                     continuar = false;
