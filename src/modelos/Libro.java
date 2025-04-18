@@ -1,25 +1,19 @@
 package src.modelos;
 
+import src.enums.TipoRecurso;
 import src.interfaces.Renovable;
 
 import java.util.Scanner;
+import java.util.List;
 
 public class Libro extends RecursoDigital implements Renovable {
     private String genero;
     private String saga;
 
-
     public Libro(String titulo, String autor, String genero, String saga) {
         super(titulo, autor);
         this.genero = genero;
         this.saga = saga;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-    public String getSaga() {
-        return saga;
     }
 
     public void setGenero(String genero) {
@@ -28,14 +22,15 @@ public class Libro extends RecursoDigital implements Renovable {
         }
         this.genero = genero;
     }
+    public String getGenero() {
+        return genero;
+    }
+
     public void setSaga(String saga) {
         this.saga = saga;
     }
-    @Override
-    public String toString() {
-        return super.toString() +
-                "\nGenero: " + genero +
-                "\nSaga: " + saga;
+    public String getSaga() {
+        return saga;
     }
 
     public static Libro crearLibro() {
@@ -49,11 +44,25 @@ public class Libro extends RecursoDigital implements Renovable {
         System.out.println("Introduzca el saga: ");
         String saga = sc.nextLine();
         return new Libro(titulo,
-                        autor,
-                        genero,
-                        saga);
+                autor,
+                genero,
+                saga);
     }
 
+    @Override
+    public List<TipoRecurso> getTipo() {
+        return List.of(
+                TipoRecurso.LIBRO,
+                TipoRecurso.PRESTABLE,
+                TipoRecurso.RENOVABLE
+        );
+    }
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nGenero: " + genero +
+                "\nSaga: " + saga;
+    }
     @Override
     public void renovar() {
         if (prestado) {

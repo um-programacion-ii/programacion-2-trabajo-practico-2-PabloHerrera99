@@ -1,5 +1,8 @@
 package src.modelos;
 
+import src.enums.TipoRecurso;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class Revista extends RecursoDigital {
@@ -12,32 +15,26 @@ public class Revista extends RecursoDigital {
         this.edicion = edicion;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-    public int getEdicion() {
-        return edicion;
-    }
-
     public void setCategoria(String categoria) {
         if (categoria == null || categoria.isEmpty()) {
             throw new IllegalArgumentException("Las revista tiene que tener una categoría");
         }
         this.categoria = categoria;
     }
+    public String getCategoria() {
+        return categoria;
+    }
+
     public void setEdicion(int edicion) {
         if (edicion < 0 || edicion == 0) {
             throw new IllegalArgumentException("Las revista tiene que tener una edición");
         }
         this.edicion = edicion;
     }
-
-    @Override
-    public String toString() {
-        return super.toString() +
-                "\nCategoria: " + categoria +
-                "\nEdicion: " + edicion;
+    public int getEdicion() {
+        return edicion;
     }
+
     public static Revista crearRevista() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo: ");
@@ -49,8 +46,22 @@ public class Revista extends RecursoDigital {
         System.out.println("Introduzca el edición: ");
         int edicion = sc.nextInt();
         return new Revista(titulo,
-                            autor,
-                            categoria,
-                            edicion);
+                autor,
+                categoria,
+                edicion);
+    }
+
+    @Override
+    public List<TipoRecurso> getTipo() {
+        return List.of(
+                TipoRecurso.REVISTA,
+                TipoRecurso.PRESTABLE
+        );
+    }
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\nCategoria: " + categoria +
+                "\nEdicion: " + edicion;
     }
 }
