@@ -1,5 +1,8 @@
 package src.modelos;
 
+import src.enums.TipoRecurso;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class Audiolibro extends RecursoDigital {
@@ -12,31 +15,24 @@ public class Audiolibro extends RecursoDigital {
         this.duracionMinutos = duracionMinutos;
     }
 
-    public String getIdioma() {
-        return idioma;
-    }
-    public int getDuracionMinutos() {
-        return duracionMinutos;
-    }
-
     public void setIdioma(String idioma) {
         if (idioma == null || idioma.isEmpty()) {
             throw new IllegalArgumentException("El audiolibro tiene que tener un idioma");
         }
         this.idioma = idioma;
     }
+    public String getIdioma() {
+        return idioma;
+    }
+
     public void setDuracionMinutos(int duracionMinutos) {
         if (duracionMinutos < 0) {
             throw new IllegalArgumentException("El audiolibro tiene que tener una duración mayor que 0");
         }
         this.duracionMinutos = duracionMinutos;
     }
-
-    @Override
-    public String toString() {
-        return super.toString() +
-                "\n Idioma: " + idioma +
-                "\n Duracion minutos: " + duracionMinutos;
+    public int getDuracionMinutos() {
+        return duracionMinutos;
     }
 
     public static Audiolibro crearAudiolibro() {
@@ -50,8 +46,22 @@ public class Audiolibro extends RecursoDigital {
         System.out.println("Introduzca el duración en minutos: ");
         int duracionMinutos = sc.nextInt();
         return new Audiolibro(titulo,
-                                autor,
-                                idioma,
-                                duracionMinutos);
+                autor,
+                idioma,
+                duracionMinutos);
+    }
+
+    @Override
+    public List<TipoRecurso> getTipo() {
+        return List.of(
+                TipoRecurso.AUDIOLIBRO,
+                TipoRecurso.PRESTABLE
+        );
+    }
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\n Idioma: " + idioma +
+                "\n Duracion minutos: " + duracionMinutos;
     }
 }

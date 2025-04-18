@@ -1,9 +1,11 @@
 package src.modelos;
 
+import src.enums.TipoRecurso;
 import src.interfaces.InterfazRD;
 import src.interfaces.Prestable;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public abstract class RecursoDigital implements InterfazRD, Prestable {
     protected String titulo;
@@ -14,8 +16,8 @@ public abstract class RecursoDigital implements InterfazRD, Prestable {
     public RecursoDigital(String titulo, String autor) {
         setTitulo(titulo);
         setAutor(autor);
-
     }
+    public abstract List<TipoRecurso> getTipo();
 
     @Override
     public String getTitulo() {

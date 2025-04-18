@@ -83,7 +83,7 @@ public class Consola {
                     "1. Crear Recurso \n" +
                     "2. Eliminar Recurso \n" +
                     "3. Listar Recursos \n" +
-                    "4. Buscar Recurso (Por Titulo o Autor) \n" +
+                    "4. Buscar Recurso (Por Titulo) \n" +
                     "5. Gestionar prestamos de recursos \n" +
                     "6. Volver al Menu Principal \n" +
                     "Elija una opción:");
