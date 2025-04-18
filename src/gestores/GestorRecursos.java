@@ -1,5 +1,6 @@
 package src.gestores;
 
+import src.enums.TipoRecurso;
 import src.interfaces.Prestable;
 import src.interfaces.Renovable;
 import src.interfaces.ServicioNotificaciones;
@@ -24,7 +25,6 @@ public class GestorRecursos {
     public void crearRecurso(RecursoDigital recurso){
         recursoDigital.add(recurso);
     }
-
     public void eliminarRecurso(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo del recurso que desea eliminar");
@@ -42,30 +42,36 @@ public class GestorRecursos {
             System.out.println("El recurso no existe");
         }
     }
+    
     public void listarRecursos() {
         Scanner sc = new Scanner(System.in);
         if (recursoDigital.isEmpty()) {
             System.out.println("No existen recursos");
             return;
         }
-        System.out.println("Inserte que tipos de recursos desea listar (libros, revistas o audiolibros)\n" +
-                "deje la opción el blanco para listar todos los recursos:");
-        String tipo = sc.nextLine();
-
-        for (RecursoDigital recurso : recursoDigital) {
-            if (tipo.equals("libros") && recurso instanceof Libro) {
-                System.out.println(recurso);
-            } else if (tipo.equals("revistas") && recurso instanceof Revista) {
-                System.out.println(recurso);
-            } else if (tipo.equals("audiolibros") && recurso instanceof Audiolibro) {
-                System.out.println(recurso);
-            } else if (tipo.isEmpty()) {
-                System.out.println(recurso);
+        List<RecursoDigital> filtrados = buscarFiltro(recursoDigital);
+        boolean continuar = true;
+        while (continuar) {
+            if (filtrados.equals(recursoDigital)) {
+                continuar = false;
+            } else {
+                System.out.println("Desea agregar otro filtro(s/n)?");
+                String opcion = sc.nextLine();
+                if (opcion.equals("s")) {
+                    filtrados = buscarFiltro(recursoDigital);
+                } else {
+                    continuar = false;
+                }
             }
-            System.out.println("\n-----------------------------\n");
+        }
+        if (filtrados.isEmpty()) {
+            System.out.println("No existen recursos que coincidan con esos filtros");
+        }
+        for (RecursoDigital recurso : filtrados) {
+            System.out.println(recurso +
+                    "\n------------------------\n");
         }
     }
-
     public void buscarRecursos(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo del recurso que desea buscar:");
@@ -76,11 +82,12 @@ public class GestorRecursos {
         if (filtrados.isEmpty()) {
             System.out.println("El recurso no existe");
         }else {
-            System.out.println("Recursos encontrados:");
-            filtrados.forEach(System.out::println);
+            System.out.println("Recursos coincidentes:");
+            for (RecursoDigital recurso : filtrados) {
+                System.out.println(recurso +
+                        "\n------------------------\n");
+            }
         }
-
-
     }
 
     public void prestarRecurso () {
@@ -144,5 +151,24 @@ public class GestorRecursos {
                        "\n-------------\n");
            }
        }
+    }
+
+    public List<RecursoDigital> buscarFiltro(List<RecursoDigital> lista){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el filtro que desea buscar(libro, revista, audiolibro, prestable o renovable).\n" +
+                "Si desea listar todos los recursos escriba (todos)");
+        String tipoString = sc.nextLine().toUpperCase();
+        if (tipoString.equals("TODOS")) {
+            return lista;
+        }
+        try {
+            TipoRecurso tipo = TipoRecurso.valueOf(tipoString);
+            return lista.stream()
+                    .filter(r -> r.getTipo().contains(tipo))
+                    .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Tipo no valido");
+        }
+        return null;
     }
 }
