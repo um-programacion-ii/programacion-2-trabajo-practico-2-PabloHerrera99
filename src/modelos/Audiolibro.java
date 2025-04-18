@@ -1,6 +1,6 @@
 package src.modelos;
 
-import src.enums.TipoRecurso;
+import src.enums.CategoriaRecurso;
 
 import java.util.List;
 import java.util.Scanner;
@@ -52,10 +52,10 @@ public class Audiolibro extends RecursoDigital {
     }
 
     @Override
-    public List<TipoRecurso> getTipo() {
+    public List<CategoriaRecurso> getTipo() {
         return List.of(
-                TipoRecurso.AUDIOLIBRO,
-                TipoRecurso.PRESTABLE
+                CategoriaRecurso.AUDIOLIBRO,
+                CategoriaRecurso.PRESTABLE
         );
     }
     @Override

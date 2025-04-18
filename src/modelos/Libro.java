@@ -1,6 +1,6 @@
 package src.modelos;
 
-import src.enums.TipoRecurso;
+import src.enums.CategoriaRecurso;
 import src.interfaces.Renovable;
 
 import java.util.Scanner;
@@ -50,11 +50,11 @@ public class Libro extends RecursoDigital implements Renovable {
     }
 
     @Override
-    public List<TipoRecurso> getTipo() {
+    public List<CategoriaRecurso> getTipo() {
         return List.of(
-                TipoRecurso.LIBRO,
-                TipoRecurso.PRESTABLE,
-                TipoRecurso.RENOVABLE
+                CategoriaRecurso.LIBRO,
+                CategoriaRecurso.PRESTABLE,
+                CategoriaRecurso.RENOVABLE
         );
     }
     @Override

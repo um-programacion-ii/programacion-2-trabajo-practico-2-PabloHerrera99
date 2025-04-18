@@ -1,13 +1,10 @@
 package src.gestores;
 
-import src.enums.TipoRecurso;
+import src.enums.CategoriaRecurso;
 import src.interfaces.Prestable;
 import src.interfaces.Renovable;
 import src.interfaces.ServicioNotificaciones;
-import src.modelos.Audiolibro;
-import src.modelos.Libro;
 import src.modelos.RecursoDigital;
-import src.modelos.Revista;
 
 import java.util.List;
 import java.util.Scanner;
@@ -157,14 +154,14 @@ public class GestorRecursos {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el filtro que desea buscar(libro, revista, audiolibro, prestable o renovable).\n" +
                 "Si desea listar todos los recursos escriba (todos)");
-        String tipoString = sc.nextLine().toUpperCase();
-        if (tipoString.equals("TODOS")) {
+        String categoriaString = sc.nextLine().toUpperCase();
+        if (categoriaString.equals("TODOS")) {
             return lista;
         }
         try {
-            TipoRecurso tipo = TipoRecurso.valueOf(tipoString);
+            CategoriaRecurso categoria = CategoriaRecurso.valueOf(categoriaString);
             return lista.stream()
-                    .filter(r -> r.getTipo().contains(tipo))
+                    .filter(r -> r.getTipo().contains(categoria))
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             System.out.println("Tipo no valido");
