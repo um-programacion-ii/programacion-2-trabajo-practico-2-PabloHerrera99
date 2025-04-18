@@ -87,4 +87,13 @@ public class GestorUsuarios {
                     "\n-----------------\n");
         }
     }
+
+    public Usuario buscarPrestamo(String nombre) throws UsuarioNoEncontradoException {
+        for (Usuario usuario : usuarios.values()) {
+            if (usuario.getNombre().equalsIgnoreCase(nombre)) {
+                return usuario;
+            }
+        }
+        throw new UsuarioNoEncontradoException("El usuario con el nombre " + nombre + " no existe");
+    }
 }

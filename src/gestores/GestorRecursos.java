@@ -5,6 +5,7 @@ import src.excepciones.RecursoNoDisponibleException;
 import src.interfaces.Prestable;
 import src.interfaces.Renovable;
 import src.interfaces.ServicioNotificaciones;
+import src.modelos.Prestamos;
 import src.modelos.RecursoDigital;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class GestorRecursos {
         this.notificacion = notificacion;
     }
 
-    public void crearRecurso(RecursoDigital recurso) throws RecursoNoDisponibleException {
+    public void crearRecurso(RecursoDigital recurso) {
             recursoDigital.add(recurso);
     }
     public void eliminarRecurso() {
@@ -88,68 +89,6 @@ public class GestorRecursos {
         }
     }
 
-    public void prestarRecurso () throws RecursoNoDisponibleException {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese el titulo del recurso que quiere prestar:");
-        String titulo = sc.nextLine();
-
-        for (RecursoDigital recurso : recursoDigital) {
-            if (recurso.getTitulo().equals(titulo) && recurso instanceof Prestable && !recurso.getPrestado()) {
-                recurso.prestar();
-                notificacion.enviarNotificacion("Recurso prestado:"+
-                                                recurso +
-                                                "\n-----------------------\n" +
-                                                "Fecha de entrega:" + recurso.getFechaEntrega());
-            } else if (recurso.getPrestado()) {
-                throw new RecursoNoDisponibleException("El recurso " + titulo + " ya se encuentra prestado");
-            }
-        }
-    }
-    public void renovarRecurso() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese el titulo del recurso a renovar:");
-        String titulo = sc.nextLine();
-        for (RecursoDigital recurso : recursoDigital) {
-            if (recurso.getTitulo().equals(titulo) && recurso instanceof Renovable) {
-                ((Renovable) recurso).renovar();
-                notificacion.enviarNotificacion("Recurso renovado:"+
-                                                recurso +
-                                                "\n-----------------------\n" +
-                                                "Fecha de entrega nueva:" + recurso.getFechaEntrega());;
-            }
-        }
-    }
-    public void devolverRecurso() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese el titulo del recurso a devolver:");
-        String titulo = sc.nextLine();
-        for (RecursoDigital recurso : recursoDigital) {
-            if (recurso.getTitulo().equals(titulo) && recurso.getPrestado()) {
-                recurso.devolver();
-                notificacion.enviarNotificacion("El recurso " + recurso.getTitulo() + " ha sido devuelto");
-                break;
-
-
-            }
-        }
-    }
-    public void listaPrestables() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Recursos prestables Disponibles:");
-       for (RecursoDigital recurso : recursoDigital) {
-           if (!recurso.getPrestado()) {
-               System.out.println(recurso +
-                       "\n-------------\n");
-           }
-       }
-       System.out.println("ReCursos prestables no Disponibles:");
-       for (RecursoDigital recurso : recursoDigital) {
-           if (recurso.getPrestado()) {
-               System.out.println(recurso +
-                       "\n-------------\n");
-           }
-       }
-    }
 
     public List<RecursoDigital> buscarFiltro(List<RecursoDigital> lista){
         Scanner sc = new Scanner(System.in);
@@ -162,11 +101,20 @@ public class GestorRecursos {
         try {
             CategoriaRecurso categoria = CategoriaRecurso.valueOf(categoriaString);
             return lista.stream()
-                    .filter(r -> r.getTipo().contains(categoria))
+                    .filter(r -> r.getCategoria().contains(categoria))
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             System.out.println("Tipo no valido");
         }
         return null;
+    }
+
+    public RecursoDigital buscarPrestamo(String titulo) throws RecursoNoDisponibleException {
+        for (RecursoDigital recurso : recursoDigital) {
+            if (recurso.getTitulo().equalsIgnoreCase(titulo)) {
+                return recurso;
+            }
+        }
+        throw new RecursoNoDisponibleException("El recurso no existe");
     }
 }

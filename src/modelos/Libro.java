@@ -1,12 +1,13 @@
 package src.modelos;
 
 import src.enums.CategoriaRecurso;
+import src.enums.EstadoRecurso;
 import src.interfaces.Renovable;
 
 import java.util.Scanner;
 import java.util.List;
 
-public class Libro extends RecursoDigital implements Renovable {
+public class Libro extends RecursoDigital {
     private String genero;
     private String saga;
 
@@ -50,7 +51,7 @@ public class Libro extends RecursoDigital implements Renovable {
     }
 
     @Override
-    public List<CategoriaRecurso> getTipo() {
+    public List<CategoriaRecurso> getCategoria() {
         return List.of(
                 CategoriaRecurso.LIBRO,
                 CategoriaRecurso.PRESTABLE,
@@ -62,12 +63,5 @@ public class Libro extends RecursoDigital implements Renovable {
         return super.toString() +
                 "\nGenero: " + genero +
                 "\nSaga: " + saga;
-    }
-    @Override
-    public void renovar() {
-        if (prestado) {
-            prestado = false;
-            fechaEntrega = fechaEntrega.plusDays(7);
-        }
     }
 }

@@ -52,7 +52,7 @@ public class Audiolibro extends RecursoDigital {
     }
 
     @Override
-    public List<CategoriaRecurso> getTipo() {
+    public List<CategoriaRecurso> getCategoria() {
         return List.of(
                 CategoriaRecurso.AUDIOLIBRO,
                 CategoriaRecurso.PRESTABLE
@@ -61,7 +61,7 @@ public class Audiolibro extends RecursoDigital {
     @Override
     public String toString() {
         return super.toString() +
-                "\n Idioma: " + idioma +
-                "\n Duracion minutos: " + duracionMinutos;
+                "\nIdioma: " + idioma +
+                "\nDuracion minutos: " + duracionMinutos;
     }
 }
