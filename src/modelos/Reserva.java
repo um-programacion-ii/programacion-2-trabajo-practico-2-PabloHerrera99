@@ -43,7 +43,7 @@ public class Reserva implements Comparable<Reserva> {
 
     //String
     public String toString() {
-        return "Recurso reservado: " + recurso.toString() +
+        return "Recurso reservado: " + recurso.getTitulo() +
                 "\nUsuario: " + usuario.getNombre() +
                 "\nFecha: " + fechaReserva + "\n";
     }
