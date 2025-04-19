@@ -2,6 +2,7 @@ package src;
 
 import src.Servicios.ServicioNotificacionesEmail;
 import src.gestores.GestorPrestamos;
+import src.gestores.GestorReservas;
 import src.interfaces.ServicioNotificaciones;
 import src.modelos.*;
 import src.gestores.GestorUsuarios;
@@ -13,6 +14,7 @@ public class Consola {
     private GestorUsuarios gestorUsuarios;
     private GestorRecursos gestorRecursos;
     private GestorPrestamos gestorPrestamos;
+    private GestorReservas gestorReservas;
 
     public Consola() {
         Map<Integer, Usuario> usuarios = new HashMap<>();
@@ -22,6 +24,7 @@ public class Consola {
         this.gestorUsuarios = new GestorUsuarios(usuarios, notificacion);
         this.gestorRecursos = new GestorRecursos(recursos, notificacion);
         this.gestorPrestamos = new GestorPrestamos(prestamos);
+        this.gestorReservas  = new GestorReservas();
 
         // Pre-cargados
         Libro l1 = new Libro("El Hobbit", "Tolkien", "Fantasía", "Saga Tolkien");
@@ -54,7 +57,9 @@ public class Consola {
             System.out.println("---- Menú Principal ---- \n" +
                     "1. Gestión de usuarios \n" +
                     "2. Gestión de recursos \n" +
-                    "3. Salir \n" +
+                    "3. Gestión de prestamos \n" +
+                    "4. Gestión de reservas \n" +
+                    "5. Salir \n" +
                     "Elija una opción: ");
             int opcion = sc.nextInt();
 
@@ -66,6 +71,12 @@ public class Consola {
                     menuGestionRecursos();
                     break;
                 case 3:
+                    menuPrestamos();
+                    break;
+                case 4:
+                    menuReservas();
+                    break;
+                case 5:
                     System.exit(0);
             }
         }
@@ -116,8 +127,7 @@ public class Consola {
                     "2. Eliminar Recurso \n" +
                     "3. Listar Recursos \n" +
                     "4. Buscar Recurso (Por Titulo) \n" +
-                    "5. Gestionar prestamos de recursos \n" +
-                    "6. Volver al Menu Principal \n" +
+                    "5. Volver al Menu Principal \n" +
                     "Elija una opción:");
             int opcion = sc.nextInt();
             switch (opcion) {
@@ -134,9 +144,6 @@ public class Consola {
                     gestorRecursos.buscarRecursos();
                     break;
                 case 5:
-                    menuPrestamos();
-                    break;
-                case 6:
                     continuar = false;
                     break;
             }
@@ -184,6 +191,7 @@ public class Consola {
             }
         }
     }
+
     public void menuPrestamos () {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
@@ -229,6 +237,56 @@ public class Consola {
                     continuar = false;
                     break;
 
+            }
+        }
+    }
+    public void menuReservas() {
+        Scanner sc = new Scanner(System.in);
+        boolean continuar = true;
+        while (continuar) {
+            System.out.println("---Menu Prestamos---\n" +
+                    "1. Reservar un recurso \n" +
+                    "2. Cancelar reserva \n" +
+                    "3. Mostrar reservas de un recurso \n" +
+                    "4. Procesar siguiente reserva \n" +
+                    "5. Volver al Menu Principal \n" +
+                    "Elija una opción:");
+            int opcion = sc.nextInt();
+            sc.nextLine();
+            switch (opcion) {
+                case 1:
+                    System.out.println("Nombre el titulo del recurso: ");
+                    String tituloReserva = sc.nextLine();
+                    RecursoDigital recursoReserva = gestorRecursos.buscarPrestamo(tituloReserva);
+                    System.out.println("Nombre al usuario: ");
+                    String nombre = sc.nextLine();
+                    Usuario usuario = gestorUsuarios.buscarPrestamo(nombre);
+                    gestorReservas.recervarRecurso(usuario, recursoReserva);
+                    break;
+                case 2:
+                    System.out.println("Nombre el titulo del recurso reservado: ");
+                    String tituloCancerlar = sc.nextLine();
+                    RecursoDigital recursoCancelar = gestorRecursos.buscarPrestamo(tituloCancerlar);
+                    System.out.println("Nombre al usuario: ");
+                    String nombreCancelar = sc.nextLine();
+                    Usuario usuarioCancelar = gestorUsuarios.buscarPrestamo(nombreCancelar);
+                    gestorReservas.cancelarReserva(usuarioCancelar, recursoCancelar);
+                    break;
+                case 3:
+                    System.out.println("Nombre el titulo del recurso: ");
+                    String tituloMostrar = sc.nextLine();
+                    RecursoDigital recursoMostrar = gestorRecursos.buscarPrestamo(tituloMostrar);
+                    gestorReservas.mostrarReservas(recursoMostrar);
+                    break;
+                case 4:
+                    System.out.println("Nombre el titulo del recurso reservado: ");
+                    String tituloSiguiente = sc.nextLine();
+                    RecursoDigital recursoSiguiente = gestorRecursos.buscarPrestamo(tituloSiguiente);
+                    gestorReservas.procesarReserva(recursoSiguiente);
+                    break;
+                case 5:
+                    continuar = false;
+                    break;
             }
         }
     }

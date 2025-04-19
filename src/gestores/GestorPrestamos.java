@@ -6,6 +6,7 @@ import src.interfaces.Prestable;
 import src.interfaces.Renovable;
 import src.modelos.Prestamos;
 import src.modelos.RecursoDigital;
+import src.modelos.Reserva;
 import src.modelos.Usuario;
 
 import java.util.ArrayList;
@@ -16,21 +17,35 @@ import java.time.LocalDate;
 
 public class GestorPrestamos {
     private List<Prestamos> prestamos = new ArrayList<>();
+    private GestorReservas gestorReservas;
 
     public GestorPrestamos(List<Prestamos> prestamos) {
         this.prestamos = prestamos;
+        this.gestorReservas = new GestorReservas();
     }
     public void prestarRecurso(Usuario usuario, RecursoDigital recurso) throws RecursoNoDisponibleException {
         if (recurso instanceof Prestable) {
             Prestable prestable = (Prestable) recurso;
-            if (prestable.estaDisponible()) {
-                prestable.prestar(usuario);
-                prestamos.add(new Prestamos(usuario, recurso, prestable.getFechaDevolucion()));
+            if (recurso.getEstado().equals(EstadoRecurso.RESERVADO)) {
+                Reserva siguiente = recurso.getReservas().peek();
+                if (!siguiente.getUsuario().equals(usuario)) {
+                    throw new RecursoNoDisponibleException("El recurso esta reservado");
+                }else {
+                    gestorReservas.procesarReserva(recurso);
+                    recurso.setEstado(EstadoRecurso.DISPONIBLE);
+                    prestable.prestar(usuario);
+                    Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
+                    prestamos.add(prestamo);
+                    System.out.println("\nDatos del prestamo: \n" + prestamo);
+                    System.out.println("Reserva atendida.");
+                }
             } else {
-                throw new RecursoNoDisponibleException("El recurso no esta disponible");
+                gestorReservas.procesarReserva(recurso);
+                prestable.prestar(usuario);
+                Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
+                prestamos.add(prestamo);
+                System.out.println("\nDatos del prestamo: \n" + prestamo);
             }
-        } else {
-            throw new RecursoNoDisponibleException("El recurso no se puede prestar");
         }
     }
 
@@ -39,6 +54,9 @@ public class GestorPrestamos {
             Prestable prestable = (Prestable) recurso;
             if (prestable.devolver()) {
                 prestamos.removeIf(p -> p.getRecurso() == recurso);
+                if (!recurso.getReservas().isEmpty()) {
+                    recurso.setEstado(EstadoRecurso.RESERVADO);
+                }
             } else {
                 throw new RecursoNoDisponibleException("El recurso no esta prestado");
             }
