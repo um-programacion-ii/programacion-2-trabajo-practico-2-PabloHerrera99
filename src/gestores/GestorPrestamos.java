@@ -2,6 +2,8 @@ package src.gestores;
 
 import src.enums.EstadoRecurso;
 import src.excepciones.RecursoNoDisponibleException;
+import src.interfaces.Prestable;
+import src.interfaces.Renovable;
 import src.modelos.Prestamos;
 import src.modelos.RecursoDigital;
 import src.modelos.Usuario;
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import java.time.LocalDate;
+
 public class GestorPrestamos {
     private List<Prestamos> prestamos = new ArrayList<>();
 
@@ -17,31 +21,44 @@ public class GestorPrestamos {
         this.prestamos = prestamos;
     }
     public void prestarRecurso(Usuario usuario, RecursoDigital recurso) throws RecursoNoDisponibleException {
-        if (recurso.getEstado() == EstadoRecurso.DISPONIBLE) {
-            Prestamos prestamo = new Prestamos(usuario, recurso);
-            prestamos.add(prestamo);
-            recurso.setEstado(EstadoRecurso.PRESTADO);
-            System.out.println("Prestamo realizado");
-            System.out.println(prestamo);
+        if (recurso instanceof Prestable) {
+            Prestable prestable = (Prestable) recurso;
+            if (prestable.estaDisponible()) {
+                prestable.prestar(usuario);
+                prestamos.add(new Prestamos(usuario, recurso, prestable.getFechaDevolucion()));
+            } else {
+                throw new RecursoNoDisponibleException("El recurso no esta disponible");
+            }
         } else {
-            throw new RecursoNoDisponibleException("El recurso no esta disponible para ser prestado");
+            throw new RecursoNoDisponibleException("El recurso no se puede prestar");
         }
     }
-    public void devolverRecurso(RecursoDigital recurso) {
-        for (Prestamos prestamo : prestamos) {
-            if (prestamo.getRecurso().equals(recurso)) {
-                prestamos.remove(prestamo);
-                recurso.setEstado(EstadoRecurso.DISPONIBLE);
-                System.out.println("El recurso " + recurso.getTitulo() + " ha sido devuelto con exito");
-                return;
+
+    public void devolverRecurso(RecursoDigital recurso) throws RecursoNoDisponibleException {
+        if (recurso instanceof Prestable) {
+            Prestable prestable = (Prestable) recurso;
+            if (prestable.devolver()) {
+                prestamos.removeIf(p -> p.getRecurso() == recurso);
+            } else {
+                throw new RecursoNoDisponibleException("El recurso no esta prestado");
             }
         }
-        System.out.println("Este recurso no esta prestado");
     }
 
     public void prestamosUsuario (Usuario usuario) {
         prestamos.stream()
                 .filter(prestamo -> prestamo.getUsuario().equals(usuario))
                 .forEach(System.out::println);
+    }
+
+    public void renovarPrestamo(RecursoDigital recurso) {
+        if (recurso instanceof Renovable) {
+            Renovable renovable = (Renovable) recurso;
+            if (!renovable.renovar()) {
+                System.out.println("El recurso no se pudo renovar");
+            }
+        } else {
+            System.out.println("El recurso no es renovable");
+        }
     }
 }

@@ -1,43 +1,43 @@
 package src.modelos;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Prestamos {
-    private Usuario usuario;
-    private RecursoDigital recurso;
-    private LocalDate fechaDevolucion;
+    private Usuario usuarioPrestamo;
+    private RecursoDigital recursoPrestamo;
+    private LocalDateTime fechaDevolucion;
 
-    public Prestamos(Usuario usuario, RecursoDigital recurso) {
-        this.usuario = usuario;
-        this.recurso = recurso;
-        this.fechaDevolucion = LocalDate.now().plusDays(7);
+    public Prestamos(Usuario usuarioPrestamo, RecursoDigital recursoPrestamo, LocalDateTime fechaDevolucion) {
+        this.usuarioPrestamo = usuarioPrestamo;
+        this.recursoPrestamo = recursoPrestamo;
+        this.fechaDevolucion = fechaDevolucion;
     }
 
     public Usuario getUsuario() {
-        return usuario;
+        return usuarioPrestamo;
     }
     public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+        this.usuarioPrestamo = usuario;
     }
 
     public RecursoDigital getRecurso() {
-        return recurso;
+        return recursoPrestamo;
     }
     public void setRecurso(RecursoDigital recurso) {
-        this.recurso = recurso;
+        this.recursoPrestamo = recurso;
     }
 
-    public LocalDate getFechaDevolucion() {
+    public LocalDateTime getFechaDevolucion() {
         return fechaDevolucion;
     }
-    public void setFechaDevolucion(LocalDate fechaDevolucion) {
+    public void setFechaDevolucion(LocalDateTime fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
 
     @Override
     public String toString() {
-        return "Recurso prestado: " + recurso.getTitulo() +
-                "\nUsuario: " + usuario.getNombre() +
+        return "Recurso prestado: " + recursoPrestamo.getTitulo() +
+                "\nUsuario: " + usuarioPrestamo.getNombre() +
                 "\nFecha de devolucion: " + fechaDevolucion;
     }
 }

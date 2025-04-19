@@ -1,13 +1,19 @@
 package src.modelos;
 
 import src.enums.CategoriaRecurso;
+import src.enums.EstadoRecurso;
+import src.interfaces.Prestable;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
-public class Revista extends RecursoDigital {
+public class Revista extends RecursoDigital implements Prestable {
     private String tipo;
     private int edicion;
+    private Usuario usuarioPrestamo;
+    private LocalDateTime fechaDevolucion;
 
     public Revista(String titulo, String autor, String tipo, int edicion) {
         super(titulo, autor);
@@ -15,6 +21,7 @@ public class Revista extends RecursoDigital {
         this.edicion = edicion;
     }
 
+    //getters y setters
     public void setTipo(String tipo) {
         if (tipo == null || tipo.isEmpty()) {
             throw new IllegalArgumentException("Las revista tiene que tener una tipo");
@@ -51,6 +58,7 @@ public class Revista extends RecursoDigital {
                 edicion);
     }
 
+    //Categoria
     @Override
     public List<CategoriaRecurso> getCategoria() {
         return List.of(
@@ -58,6 +66,39 @@ public class Revista extends RecursoDigital {
                 CategoriaRecurso.PRESTABLE
         );
     }
+
+    // Prestamos
+    @Override
+    public boolean estaDisponible() {
+        return estado == EstadoRecurso.DISPONIBLE;
+    }
+    @Override
+    public LocalDateTime getFechaDevolucion() {
+        return LocalDateTime.now();
+    }
+    @Override
+    public void prestar(Usuario usuario) {
+        if (estaDisponible()) {
+            this.usuarioPrestamo = usuario;
+            this.fechaDevolucion = LocalDateTime.now().plusDays(7);
+            this.estado = EstadoRecurso.PRESTADO;
+            System.out.println("La Revista fue prestada");
+        }else {
+            System.out.println("La Revista no esta disponible");
+        }
+    }
+    public boolean devolver() {
+        if (estado == EstadoRecurso.PRESTADO) {
+            usuarioPrestamo = null;
+            fechaDevolucion = null;
+            estado = EstadoRecurso.DISPONIBLE;
+            System.out.println("La Revista fue devuelta");
+            return true;
+        }
+        return false;
+    }
+
+    // String
     @Override
     public String toString() {
         return super.toString() +

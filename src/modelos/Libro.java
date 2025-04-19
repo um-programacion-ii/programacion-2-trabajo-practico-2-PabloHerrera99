@@ -2,14 +2,18 @@ package src.modelos;
 
 import src.enums.CategoriaRecurso;
 import src.enums.EstadoRecurso;
+import src.interfaces.Prestable;
 import src.interfaces.Renovable;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.List;
 
-public class Libro extends RecursoDigital {
+public class Libro extends RecursoDigital implements Prestable, Renovable {
     private String genero;
     private String saga;
+    private Usuario usuarioPrestamo;
+    private LocalDateTime fechaDevolucion;
 
     public Libro(String titulo, String autor, String genero, String saga) {
         super(titulo, autor);
@@ -17,6 +21,7 @@ public class Libro extends RecursoDigital {
         this.saga = saga;
     }
 
+    //getters y setters
     public void setGenero(String genero) {
         if (genero == null || genero.isEmpty()) {
             throw new IllegalArgumentException("El libro tiene que tener un genero");
@@ -34,6 +39,7 @@ public class Libro extends RecursoDigital {
         return saga;
     }
 
+    //creador
     public static Libro crearLibro() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el titulo: ");
@@ -50,6 +56,7 @@ public class Libro extends RecursoDigital {
                 saga);
     }
 
+    //categoria
     @Override
     public List<CategoriaRecurso> getCategoria() {
         return List.of(
@@ -58,6 +65,48 @@ public class Libro extends RecursoDigital {
                 CategoriaRecurso.RENOVABLE
         );
     }
+
+    //prestamos
+    @Override
+    public boolean estaDisponible() {
+        return estado == EstadoRecurso.DISPONIBLE;
+    }
+    @Override
+    public LocalDateTime getFechaDevolucion() {
+        return LocalDateTime.now();
+    }
+    @Override
+    public void prestar(Usuario usuario) {
+        if (estaDisponible()) {
+            this.usuarioPrestamo = usuario;
+            this.fechaDevolucion = LocalDateTime.now().plusDays(7);
+            this.estado = EstadoRecurso.PRESTADO;
+            System.out.println("El libro fue prestado");
+        }else {
+            System.out.println("El libro no esta disponible");
+        }
+    }
+    public boolean devolver() {
+        if (estado == EstadoRecurso.PRESTADO) {
+            usuarioPrestamo = null;
+            fechaDevolucion = null;
+            estado = EstadoRecurso.DISPONIBLE;
+            System.out.println("El libro fue devuelto");
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean renovar() {
+        if (estado == EstadoRecurso.PRESTADO) {
+            fechaDevolucion = LocalDateTime.now().plusDays(7);
+            System.out.println("Fecha de devolucion renovada a:" + fechaDevolucion);
+            return true;
+        }
+        return false;
+    }
+
+    //string
     @Override
     public String toString() {
         return super.toString() +

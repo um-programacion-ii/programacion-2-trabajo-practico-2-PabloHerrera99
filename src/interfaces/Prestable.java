@@ -1,10 +1,13 @@
 package src.interfaces;
 
-import java.time.LocalDate;
+import src.modelos.RecursoDigital;
+import src.modelos.Usuario;
+
+import java.time.LocalDateTime;
 
 public interface Prestable {
-    void prestar();
-    void devolver();
-    LocalDate getFechaEntrega();
-    boolean getPrestado();
+    boolean estaDisponible();
+    LocalDateTime getFechaDevolucion();
+    void prestar(Usuario usuario);
+    boolean devolver();
 }

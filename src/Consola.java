@@ -208,7 +208,10 @@ public class Consola {
                     gestorPrestamos.prestarRecurso(usuario, recurso);
                     break;
                 case 2:
-                    System.out.println("renovar recurso");
+                    System.out.println("Nombre el titulo del recurso: ");
+                    String tituloRenovacion = sc.nextLine();
+                    RecursoDigital recursoRenovacion = gestorRecursos.buscarPrestamo(tituloRenovacion);
+                    gestorPrestamos.renovarPrestamo(recursoRenovacion);
                     break;
                 case 3:
                     System.out.println("Nombre el titulo del recurso: ");
