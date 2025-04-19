@@ -1,6 +1,7 @@
 package src;
 
 import src.Servicios.ServicioNotificacionesEmail;
+import src.gestores.GestorPrestamos;
 import src.interfaces.ServicioNotificaciones;
 import src.modelos.*;
 import src.gestores.GestorUsuarios;
@@ -11,13 +12,16 @@ import java.util.*;
 public class Consola {
     private GestorUsuarios gestorUsuarios;
     private GestorRecursos gestorRecursos;
+    private GestorPrestamos gestorPrestamos;
 
     public Consola() {
         Map<Integer, Usuario> usuarios = new HashMap<>();
         List<RecursoDigital> recursos = new ArrayList<>();
+        List<Prestamos> prestamos = new ArrayList<>();
         ServicioNotificaciones notificacion = new ServicioNotificacionesEmail();
         this.gestorUsuarios = new GestorUsuarios(usuarios, notificacion);
         this.gestorRecursos = new GestorRecursos(recursos, notificacion);
+        this.gestorPrestamos = new GestorPrestamos(prestamos);
 
         // Pre-cargados
         Libro l1 = new Libro("El Hobbit", "Tolkien", "Fantasía", "Saga Tolkien");
@@ -188,22 +192,39 @@ public class Consola {
                     "1. Pedir prestado un recurso \n" +
                     "2. Renovar recurso \n" +
                     "3. Devolver recurso \n" +
-                    "4. Listar recursos prestables \n" +
+                    "4. Listar recursos que tiene el usuario \n" +
                     "5. Volver al Menu Principal \n" +
                     "Elija una opción:");
             int opcion = sc.nextInt();
+            sc.nextLine();
             switch (opcion) {
                 case 1:
-                    gestorRecursos.prestarRecurso();
+                    System.out.println("Nombre el titulo del recurso: ");
+                    String tituloPrestamo = sc.nextLine();
+                    RecursoDigital recurso  = gestorRecursos.buscarPrestamo(tituloPrestamo);
+                    System.out.println("Nombre al usuario: ");
+                    String nombre = sc.nextLine();
+                    Usuario usuario = gestorUsuarios.buscarPrestamo(nombre);
+                    gestorPrestamos.prestarRecurso(usuario, recurso);
                     break;
                 case 2:
-                    gestorRecursos.renovarRecurso();
+                    System.out.println("Nombre el titulo del recurso: ");
+                    String tituloRenovacion = sc.nextLine();
+                    RecursoDigital recursoRenovacion = gestorRecursos.buscarPrestamo(tituloRenovacion);
+                    gestorPrestamos.renovarPrestamo(recursoRenovacion);
                     break;
                 case 3:
-                    gestorRecursos.devolverRecurso();
+                    System.out.println("Nombre el titulo del recurso: ");
+                    String tituloDevolver = sc.nextLine();
+                    RecursoDigital recursoDevolver  = gestorRecursos.buscarPrestamo(tituloDevolver);
+                    gestorPrestamos.devolverRecurso(recursoDevolver);
                     break;
                 case 4:
-                    gestorRecursos.listaPrestables();
+                    System.out.println("Nombre del Usuario: ");
+                    String nombreUsuario = sc.nextLine();
+                    Usuario usuariolist = gestorUsuarios.buscarPrestamo(nombreUsuario);
+                    gestorPrestamos.prestamosUsuario(usuariolist);
+                    break;
                 case 5:
                     continuar = false;
                     break;
