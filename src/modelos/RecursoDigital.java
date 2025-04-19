@@ -88,7 +88,9 @@ public abstract class RecursoDigital implements InterfazRD {
         Reserva siguiente = reservas.poll();
         if (siguiente != null) {
             System.out.println("\nReserva siguiente:\n" + siguiente);
-            this.estado = EstadoRecurso.RESERVADO;
+            if (this.estado == EstadoRecurso.DISPONIBLE) {
+                this.estado = EstadoRecurso.RESERVADO;
+            }
         } else {
             System.out.println("No hay reserva pendiente para " + this.getTitulo());
         }
