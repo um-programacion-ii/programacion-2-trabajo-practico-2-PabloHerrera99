@@ -1,7 +1,6 @@
 package src.gestores;
 
 import src.excepciones.UsuarioNoEncontradoException;
-import src.interfaces.ServicioNotificaciones;
 import src.modelos.Usuario;
 
 import java.util.ArrayList;
@@ -11,11 +10,12 @@ import java.util.Map;
 
 public class GestorUsuarios {
     private Map<Integer, Usuario> usuarios;
-    private ServicioNotificaciones notificacion;
+    private GestorNotificaciones notificaciones;
 
-    public GestorUsuarios(Map<Integer, Usuario> usuarios, ServicioNotificaciones notificacion) {
+
+    public GestorUsuarios(Map<Integer, Usuario> usuarios) {
         this.usuarios = usuarios;
-        this.notificacion = notificacion;
+        this.notificaciones = new GestorNotificaciones();
     }
 
     public void addUsuario(Usuario usuario){
@@ -47,8 +47,9 @@ public class GestorUsuarios {
             usuarios.put(usuario.getId(), usuario);
 
             System.out.println("Usuario registrado");
-            notificacion.enviarNotificacion("Usuario registrado, datos de usuario:\n"+
-                    usuario);
+
+            String mensaje = "Usuario registrado. Datos del usuario:\n" + usuario;
+            notificaciones.enviarNotificacion(usuario, mensaje);
         }
         catch (IllegalArgumentException error){
             System.out.println(error.getMessage());
@@ -63,7 +64,8 @@ public class GestorUsuarios {
         Usuario usuario = usuarios.get(id);
         if (usuario != null) {
             usuarios.remove(id);
-            notificacion.enviarNotificacion("Usuario: " + usuario.getNombre() + " eliminado");
+            String mensaje = "Usuario Eliminado. Datos del usuario:\n" + usuario;
+            notificaciones.enviarNotificacion(usuario, mensaje);
         }else {
             throw new UsuarioNoEncontradoException("El Usuario con el id " + id + " no existe");
         }
@@ -96,4 +98,5 @@ public class GestorUsuarios {
         }
         throw new UsuarioNoEncontradoException("El usuario con el nombre " + nombre + " no existe");
     }
+
 }

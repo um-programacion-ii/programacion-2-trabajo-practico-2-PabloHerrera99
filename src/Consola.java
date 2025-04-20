@@ -1,9 +1,9 @@
 package src;
 
-import src.Servicios.ServicioNotificacionesEmail;
+import src.Servicios.NotificacionesEmail;
 import src.gestores.GestorPrestamos;
 import src.gestores.GestorReservas;
-import src.interfaces.ServicioNotificaciones;
+import src.interfaces.Notificacion;
 import src.modelos.*;
 import src.gestores.GestorUsuarios;
 import src.gestores.GestorRecursos;
@@ -20,9 +20,9 @@ public class Consola {
         Map<Integer, Usuario> usuarios = new HashMap<>();
         List<RecursoDigital> recursos = new ArrayList<>();
         List<Prestamos> prestamos = new ArrayList<>();
-        ServicioNotificaciones notificacion = new ServicioNotificacionesEmail();
-        this.gestorUsuarios = new GestorUsuarios(usuarios, notificacion);
-        this.gestorRecursos = new GestorRecursos(recursos, notificacion);
+        //Notificacion notificacion = new NotificacionesEmail();
+        this.gestorUsuarios = new GestorUsuarios(usuarios);
+        this.gestorRecursos = new GestorRecursos(recursos);
         this.gestorPrestamos = new GestorPrestamos(prestamos);
         this.gestorReservas  = new GestorReservas();
 
