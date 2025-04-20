@@ -18,10 +18,12 @@ import java.time.LocalDate;
 public class GestorPrestamos {
     private List<Prestamos> prestamos = new ArrayList<>();
     private GestorReservas gestorReservas;
+    private GestorNotificaciones notificaciones;
 
     public GestorPrestamos(List<Prestamos> prestamos) {
         this.prestamos = prestamos;
         this.gestorReservas = new GestorReservas();
+        this.notificaciones = new GestorNotificaciones();
     }
     public void prestarRecurso(Usuario usuario, RecursoDigital recurso) throws RecursoNoDisponibleException {
         if (recurso instanceof Prestable) {
@@ -37,7 +39,8 @@ public class GestorPrestamos {
                     Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
                     prestamos.add(prestamo);
                     System.out.println("\nDatos del prestamo: \n" + prestamo);
-                    System.out.println("Reserva atendida.");
+                    String mensaje ="\nDatos del prestamo: \n" + prestamo;
+                    notificaciones.enviarNotificacion(usuario, mensaje);
                 }
             } else {
                 gestorReservas.procesarReserva(recurso);
@@ -45,6 +48,8 @@ public class GestorPrestamos {
                 Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
                 prestamos.add(prestamo);
                 System.out.println("\nDatos del prestamo: \n" + prestamo);
+                String mensaje ="\nDatos del prestamo: \n" + prestamo;
+                notificaciones.enviarNotificacion(usuario, mensaje);
             }
         }
     }
@@ -57,6 +62,7 @@ public class GestorPrestamos {
                 if (!recurso.getReservas().isEmpty()) {
                     recurso.setEstado(EstadoRecurso.RESERVADO);
                 }
+
             } else {
                 throw new RecursoNoDisponibleException("El recurso no esta prestado");
             }
@@ -79,4 +85,5 @@ public class GestorPrestamos {
             System.out.println("El recurso no es renovable");
         }
     }
+
 }

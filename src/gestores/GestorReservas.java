@@ -6,16 +6,26 @@ import src.modelos.Reserva;
 import src.modelos.Usuario;
 
 public class GestorReservas {
+    private GestorNotificaciones notificaciones;
+
+    public GestorReservas() {
+        this.notificaciones = new GestorNotificaciones();
+    }
+
     public void recervarRecurso(Usuario usuario, RecursoDigital recurso) {
         Reserva reserva = new Reserva(usuario, recurso);
         if (recurso.getEstado().equals(EstadoRecurso.DISPONIBLE)) {
             recurso.setEstado(EstadoRecurso.RESERVADO);
         }
         recurso.getReservas().add(reserva);
-        System.out.println("Reserva realizada\n " + reserva + "\n");
+        String mensaje = "Reserva realizada\n " + reserva + "\n";
+        System.out.println(mensaje);
+        notificaciones.enviarNotificacion(usuario, mensaje);
+
     }
     public void cancelarReserva(Usuario usuario, RecursoDigital recurso) {
         recurso.eliminarReserva(usuario);
+
     }
 
     public void procesarReserva(RecursoDigital recurso) {
@@ -25,6 +35,4 @@ public class GestorReservas {
     public void mostrarReservas(RecursoDigital recurso) {
         recurso.mostrarReservas();
     }
-
-
 }

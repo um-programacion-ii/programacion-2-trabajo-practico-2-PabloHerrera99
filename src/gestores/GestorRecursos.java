@@ -2,10 +2,7 @@ package src.gestores;
 
 import src.enums.CategoriaRecurso;
 import src.excepciones.RecursoNoDisponibleException;
-import src.interfaces.Prestable;
-import src.interfaces.Renovable;
-import src.interfaces.ServicioNotificaciones;
-import src.modelos.Prestamos;
+import src.interfaces.Notificacion;
 import src.modelos.RecursoDigital;
 
 import java.util.List;
@@ -14,11 +11,10 @@ import java.util.stream.Collectors;
 
 public class GestorRecursos {
     private List<RecursoDigital> recursoDigital;
-    private ServicioNotificaciones notificacion;
 
-    public GestorRecursos(List<RecursoDigital> recursoDigital, ServicioNotificaciones notificacion) {
+
+    public GestorRecursos(List<RecursoDigital> recursoDigital) {
         this.recursoDigital = recursoDigital;
-        this.notificacion = notificacion;
     }
 
     public void crearRecurso(RecursoDigital recurso) {
@@ -117,4 +113,5 @@ public class GestorRecursos {
         }
         throw new RecursoNoDisponibleException("El recurso no existe");
     }
+
 }
