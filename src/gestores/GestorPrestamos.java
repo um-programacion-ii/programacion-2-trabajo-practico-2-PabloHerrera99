@@ -26,34 +26,36 @@ public class GestorPrestamos {
         this.notificaciones = new GestorNotificaciones();
     }
     public void prestarRecurso(Usuario usuario, RecursoDigital recurso) throws RecursoNoDisponibleException {
-        if (recurso instanceof Prestable) {
-            Prestable prestable = (Prestable) recurso;
-            if (recurso.getEstado().equals(EstadoRecurso.RESERVADO)) {
-                Reserva siguiente = recurso.getReservas().peek();
-                if (!siguiente.getUsuario().equals(usuario)) {
-                    throw new RecursoNoDisponibleException("El recurso esta reservado");
-                }else {
+        synchronized (recurso) {
+            if (recurso instanceof Prestable) {
+                Prestable prestable = (Prestable) recurso;
+                if (recurso.getEstado().equals(EstadoRecurso.RESERVADO)) {
+                    Reserva siguiente = recurso.getReservas().peek();
+                    if (!siguiente.getUsuario().equals(usuario)) {
+                        throw new RecursoNoDisponibleException("El recurso esta reservado");
+                    } else {
+                        gestorReservas.procesarReserva(recurso);
+                        recurso.setEstado(EstadoRecurso.DISPONIBLE);
+                        prestable.prestar(usuario);
+                        Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
+                        prestamos.add(prestamo);
+                        System.out.println("\nDatos del prestamo: \n" + prestamo);
+                        String mensaje = "\nDatos del prestamo: \n" + prestamo;
+                        notificaciones.enviarNotificacion(usuario, mensaje);
+                    }
+                } else {
                     gestorReservas.procesarReserva(recurso);
-                    recurso.setEstado(EstadoRecurso.DISPONIBLE);
                     prestable.prestar(usuario);
                     Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
                     prestamos.add(prestamo);
                     System.out.println("\nDatos del prestamo: \n" + prestamo);
-                    String mensaje ="\nDatos del prestamo: \n" + prestamo;
+                    String mensaje = "\nDatos del prestamo: \n" + prestamo;
                     notificaciones.enviarNotificacion(usuario, mensaje);
                 }
-            } else {
-                gestorReservas.procesarReserva(recurso);
-                prestable.prestar(usuario);
-                Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
-                prestamos.add(prestamo);
-                System.out.println("\nDatos del prestamo: \n" + prestamo);
-                String mensaje ="\nDatos del prestamo: \n" + prestamo;
-                notificaciones.enviarNotificacion(usuario, mensaje);
             }
+            System.out.println("\n[HILO: " + Thread.currentThread().getName() + "]");
         }
     }
-
     public void devolverRecurso(RecursoDigital recurso) throws RecursoNoDisponibleException {
         if (recurso instanceof Prestable) {
             Prestable prestable = (Prestable) recurso;
