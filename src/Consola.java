@@ -7,6 +7,7 @@ import src.interfaces.Notificacion;
 import src.modelos.*;
 import src.gestores.GestorUsuarios;
 import src.gestores.GestorRecursos;
+import src.reportes.Reporte;
 
 import java.util.*;
 
@@ -15,16 +16,17 @@ public class Consola {
     private GestorRecursos gestorRecursos;
     private GestorPrestamos gestorPrestamos;
     private GestorReservas gestorReservas;
+    private Reporte reporte;
 
     public Consola() {
         Map<Integer, Usuario> usuarios = new HashMap<>();
         List<RecursoDigital> recursos = new ArrayList<>();
         List<Prestamos> prestamos = new ArrayList<>();
-        //Notificacion notificacion = new NotificacionesEmail();
         this.gestorUsuarios = new GestorUsuarios(usuarios);
         this.gestorRecursos = new GestorRecursos(recursos);
         this.gestorPrestamos = new GestorPrestamos(prestamos);
-        this.gestorReservas  = new GestorReservas();
+        this.gestorReservas = new GestorReservas();
+        this.reporte = new Reporte(recursos, usuarios);
 
         // Pre-cargados
         Libro l1 = new Libro("El Hobbit", "Tolkien", "Fantasía", "Saga Tolkien");
@@ -59,7 +61,8 @@ public class Consola {
                     "2. Gestión de recursos \n" +
                     "3. Gestión de prestamos \n" +
                     "4. Gestión de reservas \n" +
-                    "5. Salir \n" +
+                    "5. Reportes\n" +
+                    "6. Salir \n" +
                     "Elija una opción: ");
             int opcion = sc.nextInt();
 
@@ -77,6 +80,9 @@ public class Consola {
                     menuReservas();
                     break;
                 case 5:
+                    menuReporte();
+                    break;
+                case 6:
                     System.exit(0);
             }
         }
@@ -289,5 +295,13 @@ public class Consola {
                     break;
             }
         }
+    }
+
+    public void menuReporte() {
+        System.out.println("---Reporte del systema ---");
+        reporte.reportePrestamos();
+        reporte.reporteUsuarios();
+        reporte.reporteCategorias();
+
     }
 }

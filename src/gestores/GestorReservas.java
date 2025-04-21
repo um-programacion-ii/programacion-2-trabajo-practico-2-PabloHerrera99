@@ -21,6 +21,7 @@ public class GestorReservas {
         String mensaje = "Reserva realizada\n " + reserva + "\n";
         System.out.println(mensaje);
         notificaciones.enviarNotificacion(usuario, mensaje);
+        usuario.aumentarContadorActividad();
 
     }
     public void cancelarReserva(Usuario usuario, RecursoDigital recurso) {
