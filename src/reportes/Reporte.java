@@ -1,8 +1,6 @@
 package src.reportes;
 
-import src.modelos.Prestamos;
-import src.modelos.RecursoDigital;
-import src.modelos.Usuario;
+import src.modelos.*;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -34,5 +32,23 @@ public class Reporte {
                 .sorted(Comparator.comparingInt(Usuario::getContadorActividad).reversed())
                 .limit(5)
                 .forEach(u -> System.out.println(" - " + u.getNombre() + ": " + u.getContadorActividad()));
+    }
+    public void reporteCategorias() {
+        System.out.println("\nReporte de Categorias");
+        Map<String, Integer> cantidadCategorias = new HashMap<>();
+        for (RecursoDigital r : recursos) {
+            String categoria = null;
+            if (r instanceof Libro) {
+                categoria = "Libro";
+            } else if (r instanceof Revista) {
+                categoria = "Revista";
+            } else if (r instanceof Audiolibro) {
+                categoria = "Audiolibro";
+            }
+            int cantidad = r.getContadorPrestamos();
+            cantidadCategorias.put(categoria, cantidadCategorias.getOrDefault(categoria,0) + cantidad);
+        }
+        cantidadCategorias.forEach((categoria,total) ->
+                System.out.println(" - " + categoria + ": " + total));
     }
 }

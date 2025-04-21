@@ -301,6 +301,7 @@ public class Consola {
         System.out.println("---Reporte del systema ---");
         reporte.reportePrestamos();
         reporte.reporteUsuarios();
+        reporte.reporteCategorias();
 
     }
 }
