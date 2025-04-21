@@ -27,6 +27,14 @@ public class GestorPrestamos {
         this.gestorReservas = new GestorReservas();
         this.notificaciones = new GestorNotificaciones();
     }
+    public List<Prestamos> getPrestamos() {
+        return prestamos;
+    }
+    public void addPrestamos(Prestamos prestamo) {
+        prestamo.getRecurso().setEstado(EstadoRecurso.PRESTADO);
+        prestamos.add(prestamo);
+    }
+
     public void prestarRecurso(Usuario usuario, RecursoDigital recurso) throws RecursoNoDisponibleException {
         synchronized (recurso) {
             if (recurso instanceof Prestable) {
