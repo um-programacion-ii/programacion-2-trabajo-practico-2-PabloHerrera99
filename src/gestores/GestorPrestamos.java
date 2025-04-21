@@ -46,6 +46,7 @@ public class GestorPrestamos {
                         String mensaje = "\nDatos del prestamo: \n" + prestamo;
                         notificaciones.enviarNotificacion(usuario, mensaje);
                         recurso.aumentarContadorPrestamos();
+                        usuario.aumentarContadorActividad();
                     }
                 } else {
                     // prestamo sin reserva
@@ -57,6 +58,7 @@ public class GestorPrestamos {
                     String mensaje = "\nDatos del prestamo: \n" + prestamo;
                     notificaciones.enviarNotificacion(usuario, mensaje);
                     recurso.aumentarContadorPrestamos();
+                    usuario.aumentarContadorActividad();
                 }
             }
             System.out.println("\n[HILO: " + Thread.currentThread().getName() + "]");

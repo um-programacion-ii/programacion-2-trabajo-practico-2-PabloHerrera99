@@ -26,7 +26,7 @@ public class Consola {
         this.gestorRecursos = new GestorRecursos(recursos);
         this.gestorPrestamos = new GestorPrestamos(prestamos);
         this.gestorReservas = new GestorReservas();
-        this.reporte = new Reporte(recursos);
+        this.reporte = new Reporte(recursos, usuarios);
 
         // Pre-cargados
         Libro l1 = new Libro("El Hobbit", "Tolkien", "Fantasía", "Saga Tolkien");
@@ -300,6 +300,7 @@ public class Consola {
     public void menuReporte() {
         System.out.println("---Reporte del systema ---");
         reporte.reportePrestamos();
+        reporte.reporteUsuarios();
 
     }
 }

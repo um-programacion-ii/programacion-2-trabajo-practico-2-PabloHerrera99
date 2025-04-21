@@ -5,6 +5,7 @@ public class Usuario {
     private int id;
     private String email;
     private int telefono;
+    private int contadorActividad;
 
     public Usuario(String nombre, int id, String email, int telefono) {
         setNombre(nombre);
@@ -51,6 +52,14 @@ public class Usuario {
             throw new IllegalArgumentException("El telefono no puede estar vacio");
         }
         this.telefono = telefono;
+    }
+
+    public int getContadorActividad() {
+        return contadorActividad;
+    }
+
+    public void aumentarContadorActividad() {
+        contadorActividad++;
     }
 
     @Override
