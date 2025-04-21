@@ -34,6 +34,9 @@ public class AlertaVencimiento implements Runnable {
         Scanner sc = new Scanner(System.in);
         System.out.println("\n ALERTA DE VENCIMIENTO" + "(" + mensaje + ")\n");
         System.out.println(prestamo + "\n");
+        if (prestamo.getRecurso() instanceof Renovable) {
+            System.out.println("Este recurso es renovable. Vaya la menu de renovaciones para renovarlo\n");
+        }
 
         // me rompe el programa porque escanner no esta pensado para funcionar en hilos y un scanner
         //se pisa con el otro (el de la consola y este)
