@@ -2,7 +2,6 @@ package src.gestores;
 
 import src.enums.CategoriaRecurso;
 import src.excepciones.RecursoNoDisponibleException;
-import src.interfaces.Notificacion;
 import src.modelos.RecursoDigital;
 
 import java.util.List;

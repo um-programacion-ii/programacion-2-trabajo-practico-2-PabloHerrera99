@@ -3,9 +3,7 @@ package src.modelos;
 import src.enums.CategoriaRecurso;
 import src.enums.EstadoRecurso;
 import src.interfaces.InterfazRD;
-import src.interfaces.Prestable;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -14,6 +12,7 @@ public abstract class RecursoDigital implements InterfazRD {
     protected String autor;
     protected EstadoRecurso estado;
     protected PriorityBlockingQueue<Reserva> reservas;
+    protected int contadorPrestamos = 0;
 
     public RecursoDigital(String titulo, String autor) {
         setTitulo(titulo);
@@ -60,6 +59,10 @@ public abstract class RecursoDigital implements InterfazRD {
         this.reservas = reservas;
     }
 
+    public int getContadorPrestamos() {
+        return contadorPrestamos;
+    }
+
     //reservas
     public void agregarReserva(Reserva reserva) {
         reservas.offer(reserva);
@@ -96,6 +99,10 @@ public abstract class RecursoDigital implements InterfazRD {
         }
     }
 
+    //contador
+    public void aumentarContadorPrestamos() {
+        contadorPrestamos++;
+    }
     //String
     @Override
     public String toString() {

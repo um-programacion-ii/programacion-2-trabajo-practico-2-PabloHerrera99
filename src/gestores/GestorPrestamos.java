@@ -11,9 +11,11 @@ import src.modelos.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 public class GestorPrestamos {
     private List<Prestamos> prestamos = new ArrayList<>();
@@ -30,6 +32,7 @@ public class GestorPrestamos {
             if (recurso instanceof Prestable) {
                 Prestable prestable = (Prestable) recurso;
                 if (recurso.getEstado().equals(EstadoRecurso.RESERVADO)) {
+                    // prestamo con reserva
                     Reserva siguiente = recurso.getReservas().peek();
                     if (!siguiente.getUsuario().equals(usuario)) {
                         throw new RecursoNoDisponibleException("El recurso esta reservado");
@@ -42,8 +45,10 @@ public class GestorPrestamos {
                         System.out.println("\nDatos del prestamo: \n" + prestamo);
                         String mensaje = "\nDatos del prestamo: \n" + prestamo;
                         notificaciones.enviarNotificacion(usuario, mensaje);
+                        recurso.aumentarContadorPrestamos();
                     }
                 } else {
+                    // prestamo sin reserva
                     gestorReservas.procesarReserva(recurso);
                     prestable.prestar(usuario);
                     Prestamos prestamo = new Prestamos(usuario, recurso, prestable.getFechaDevolucion());
@@ -51,6 +56,7 @@ public class GestorPrestamos {
                     System.out.println("\nDatos del prestamo: \n" + prestamo);
                     String mensaje = "\nDatos del prestamo: \n" + prestamo;
                     notificaciones.enviarNotificacion(usuario, mensaje);
+                    recurso.aumentarContadorPrestamos();
                 }
             }
             System.out.println("\n[HILO: " + Thread.currentThread().getName() + "]");
@@ -70,13 +76,6 @@ public class GestorPrestamos {
             }
         }
     }
-
-    public void prestamosUsuario (Usuario usuario) {
-        prestamos.stream()
-                .filter(prestamo -> prestamo.getUsuario().equals(usuario))
-                .forEach(System.out::println);
-    }
-
     public void renovarPrestamo(RecursoDigital recurso) {
         if (recurso instanceof Renovable) {
             Renovable renovable = (Renovable) recurso;
@@ -88,4 +87,9 @@ public class GestorPrestamos {
         }
     }
 
+    public void prestamosUsuario (Usuario usuario) {
+        prestamos.stream()
+                .filter(prestamo -> prestamo.getUsuario().equals(usuario))
+                .forEach(System.out::println);
+    }
 }
