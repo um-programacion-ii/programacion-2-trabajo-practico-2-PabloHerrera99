@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AlertaVencimiento {
+public class AlertaVencimiento{
     private List<Prestamos> prestamos;
     private GestorPrestamos gestorPrestamos;
 
@@ -19,7 +19,8 @@ public class AlertaVencimiento {
         this.gestorPrestamos =  gestorPrestamos;
     }
 
-    public void mostrarVencimiento() {
+    public List<String> mostrarVencimiento() {
+        List<String> mensajeAlerta =  new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         List<String> mensajes = new ArrayList<>();
         for (Prestamos prestamo : prestamos) {
@@ -27,9 +28,10 @@ public class AlertaVencimiento {
             long dias = ChronoUnit.DAYS.between(LocalDateTime.now(), vencimiento);
 
             if (dias == 1 || dias == 0) {
-                String mensaje = dias == 1 ? "Vence en 1 día" : "Vence hoy";
-                System.out.println("\nALERTA DE VENCIMIENTO: " + mensaje);
-                System.out.println(prestamo);
+                String dia = dias == 1 ? "Vence en 1 día" : "Vence hoy";
+                String mensaje= "\nALERTA DE VENCIMIENTO:" + dia + prestamo;
+                System.out.println(mensaje);
+                mensajeAlerta.add(mensaje);
 
                 if (prestamo.getRecurso() instanceof Renovable) {
                     System.out.println("¿Desea renovar este recurso? (s/n): ");
@@ -41,5 +43,6 @@ public class AlertaVencimiento {
                 }
             }
         }
+        return mensajeAlerta;
     }
 }

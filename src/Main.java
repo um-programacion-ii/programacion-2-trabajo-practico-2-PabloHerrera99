@@ -21,11 +21,13 @@ public class Main {
         GestorPrestamos gestorPrestamos = new GestorPrestamos(prestamos);
         GestorReservas gestorReservas = new GestorReservas();
         Reporte reporte = new Reporte(recursos, usuarios);
-        AlertaVencimiento alertaVencimiento = new AlertaVencimiento(prestamos, gestorPrestamos);
-        AlertaDisponibilidad alertaDisponibilidad = new AlertaDisponibilidad(recursos, gestorPrestamos);
+        AlertaDisponibilidad disponibilidad = new AlertaDisponibilidad(recursos,gestorPrestamos);
+        AlertaVencimiento vencimiento = new AlertaVencimiento(prestamos,gestorPrestamos);
+        GestorAlertas gestorAlertas = new GestorAlertas(disponibilidad,vencimiento);
+
 
         Consola consola = new Consola(gestorUsuarios,gestorRecursos,gestorPrestamos,
-                gestorReservas,reporte,alertaVencimiento,alertaDisponibilidad);
+                gestorReservas,reporte,gestorAlertas);
 
         consola.menuPrincipal();
     }
