@@ -107,7 +107,8 @@ public abstract class RecursoDigital implements InterfazRD {
     @Override
     public String toString() {
         return "Titulo: " + titulo +
-                "\nAutor: " + autor;
+                "\nAutor: " + autor +
+                "\nEstado; " + estado;
     }
 
 }

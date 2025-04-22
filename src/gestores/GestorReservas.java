@@ -5,12 +5,17 @@ import src.modelos.RecursoDigital;
 import src.modelos.Reserva;
 import src.modelos.Usuario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GestorReservas {
     private GestorNotificaciones notificaciones;
 
     public GestorReservas() {
         this.notificaciones = new GestorNotificaciones();
     }
+
+
 
     public void recervarRecurso(Usuario usuario, RecursoDigital recurso) {
         Reserva reserva = new Reserva(usuario, recurso);
@@ -36,4 +41,5 @@ public class GestorReservas {
     public void mostrarReservas(RecursoDigital recurso) {
         recurso.mostrarReservas();
     }
+
 }

@@ -4,6 +4,7 @@ import src.enums.CategoriaRecurso;
 import src.excepciones.RecursoNoDisponibleException;
 import src.modelos.RecursoDigital;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -14,6 +15,10 @@ public class GestorRecursos {
 
     public GestorRecursos(List<RecursoDigital> recursoDigital) {
         this.recursoDigital = recursoDigital;
+    }
+
+    public List<RecursoDigital> getRecursoDigital() {
+        return recursoDigital;
     }
 
     public void crearRecurso(RecursoDigital recurso) {
@@ -84,7 +89,6 @@ public class GestorRecursos {
         }
     }
 
-
     public List<RecursoDigital> buscarFiltro(List<RecursoDigital> lista){
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese el filtro que desea buscar(libro, revista, audiolibro, prestable o renovable).\n" +
@@ -111,6 +115,16 @@ public class GestorRecursos {
             }
         }
         throw new RecursoNoDisponibleException("El recurso no existe");
+    }
+
+    public List<RecursoDigital> buscarReservas() {
+        List<RecursoDigital> recursosReservas = new ArrayList<>();
+        for (RecursoDigital recurso : recursoDigital) {
+            if (recurso.getReservas() != null && !recurso.getReservas().isEmpty()) {
+                recursosReservas.add(recurso);
+            }
+        }
+        return recursosReservas;
     }
 
 }
