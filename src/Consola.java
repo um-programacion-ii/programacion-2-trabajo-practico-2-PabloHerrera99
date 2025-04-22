@@ -1,16 +1,13 @@
 package src;
 
-import src.Servicios.NotificacionesEmail;
 import src.enums.NivelUrgencia;
 import src.gestores.*;
-import src.interfaces.Notificacion;
 import src.modelos.*;
-import src.reportes.AlertaDisponibilidad;
-import src.reportes.AlertaVencimiento;
 import src.reportes.Reporte;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Consola {
     private GestorUsuarios gestorUsuarios;
@@ -20,6 +17,7 @@ public class Consola {
     private GestorAlertas gestorAlertas;
     private Reporte reporte;
     private Scanner scanner;
+    private boolean reporteAutomatico;
 
 
     public Consola(GestorUsuarios usuarios, GestorRecursos recursos, GestorPrestamos prestamos,
@@ -31,6 +29,7 @@ public class Consola {
         this.gestorAlertas = gestorAlertas;
         this.reporte = reporte;
         this.scanner = new Scanner(System.in);
+        this.reporteAutomatico = false;
 
 
 
@@ -398,11 +397,16 @@ public class Consola {
     }
 
     public void menuReporte() {
-        System.out.println("---Reporte del sistema ---");
-        reporte.reportePrestamos();
-        reporte.reporteUsuarios();
-        reporte.reporteCategorias();
-
+        System.out.println("---Reporte del sistema ---\n" +
+                "Seleccione el tipo de reporte \n" +
+                "1. Prestamos\n" +
+                "2. Usuarios\n" +
+                "3. Recursos");
+        int opcion = scanner.nextInt();
+        switch (opcion) {
+            case 1: reporte.generarReporteAsync("prestamos"); break;
+            case 2: reporte.generarReporteAsync("usuarios"); break;
+            case 3: reporte.generarReporteAsync("recursos"); break;
+        }
     }
-
 }
