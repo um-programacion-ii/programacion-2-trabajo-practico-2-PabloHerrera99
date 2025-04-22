@@ -7,6 +7,8 @@ import src.interfaces.Notificacion;
 import src.modelos.*;
 import src.gestores.GestorUsuarios;
 import src.gestores.GestorRecursos;
+import src.reportes.AlertaDisponibilidad;
+import src.reportes.AlertaVencimiento;
 import src.reportes.Reporte;
 
 import java.time.LocalDateTime;
@@ -19,14 +21,19 @@ public class Consola {
     private GestorReservas gestorReservas;
     private Reporte reporte;
     private Scanner scanner;
+    private AlertaVencimiento alertaVencimiento;
+    private AlertaDisponibilidad alertaDisponibilidad;
 
     public Consola(GestorUsuarios usuarios, GestorRecursos recursos, GestorPrestamos prestamos,
-                   GestorReservas gestorReservas, Reporte reporte) {
+                   GestorReservas gestorReservas, Reporte reporte, AlertaVencimiento alertaVencimiento,
+                   AlertaDisponibilidad alertaDisponibilidad) {
         this.gestorUsuarios = usuarios;
         this.gestorRecursos = recursos;
         this.gestorPrestamos = prestamos;
         this.gestorReservas = gestorReservas;
         this.reporte = reporte;
+        this.alertaVencimiento = alertaVencimiento;
+        this.alertaDisponibilidad = alertaDisponibilidad;
         this.scanner = new Scanner(System.in);
 
 
@@ -63,8 +70,44 @@ public class Consola {
 
     }
 
+    public void menuPrincipal() {
+        while (true) {
+            alertaVencimiento.mostrarVencimiento();
+            alertaDisponibilidad.mostrarDisponibilidad();
+            System.out.println("---- Menú Principal ---- \n" +
+                    "1. Gestión de usuarios \n" +
+                    "2. Gestión de recursos \n" +
+                    "3. Gestión de prestamos \n" +
+                    "4. Gestión de reservas \n" +
+                    "5. Reportes\n" +
+                    "6. Salir \n" +
+                    "Elija una opción: ");
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+            switch (opcion) {
+                case 1:
+                    menuGestionUsuario();
+                    break;
+                case 2:
+                    menuGestionRecursos();
+                    break;
+                case 3:
+                    menuPrestamos();
+                    break;
+                case 4:
+                    menuReservas();
+                    break;
+                case 5:
+                    menuReporte();
+                    break;
+                case 6:
+                    System.exit(0);
+            }
+        }
+    }
     private void menuGestionUsuario() {
         boolean continuar = true;
+        alertaVencimiento.mostrarVencimiento();
         while (continuar) {
             System.out.println("--- Menu De Gestión de Usuarios --- \n" +
                     "1. Crear Usuario \n" +
@@ -97,39 +140,6 @@ public class Consola {
                 break;
             }
         }
-    }
-    public void menuPrincipal() {
-        while (true) {
-            System.out.println("---- Menú Principal ---- \n" +
-                    "1. Gestión de usuarios \n" +
-                    "2. Gestión de recursos \n" +
-                    "3. Gestión de prestamos \n" +
-                    "4. Gestión de reservas \n" +
-                    "5. Reportes\n" +
-                    "6. Salir \n" +
-                    "Elija una opción: ");
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
-            switch (opcion) {
-                case 1:
-                    menuGestionUsuario();
-                    break;
-                case 2:
-                    menuGestionRecursos();
-                    break;
-                case 3:
-                    menuPrestamos();
-                    break;
-                case 4:
-                    menuReservas();
-                    break;
-                case 5:
-                        menuReporte();
-                        break;
-                case 6:
-                        System.exit(0);
-                }
-            }
     }
 
     private void menuGestionRecursos() {

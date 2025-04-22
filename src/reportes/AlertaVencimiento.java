@@ -1,55 +1,45 @@
 package src.reportes;
 
+import src.gestores.GestorPrestamos;
 import src.interfaces.Renovable;
 import src.modelos.Prestamos;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AlertaVencimiento implements Runnable {
+public class AlertaVencimiento {
     private List<Prestamos> prestamos;
+    private GestorPrestamos gestorPrestamos;
 
-    public AlertaVencimiento(List<Prestamos> prestamos) {
+    public AlertaVencimiento(List<Prestamos> prestamos, GestorPrestamos gestorPrestamos) {
         this.prestamos = prestamos;
+        this.gestorPrestamos =  gestorPrestamos;
     }
 
-    public void run() {
+    public void mostrarVencimiento() {
+        Scanner sc = new Scanner(System.in);
+        List<String> mensajes = new ArrayList<>();
         for (Prestamos prestamo : prestamos) {
             LocalDateTime vencimiento = prestamo.getFechaDevolucion();
-            long dias = ChronoUnit.DAYS.between(vencimiento, LocalDateTime.now());
+            long dias = ChronoUnit.DAYS.between(LocalDateTime.now(), vencimiento);
 
-            if (dias == 1) {
-                String mensaje = "Falta 1 dia";
-                alerta(prestamo, mensaje);
-            } else if (dias == 0) {
-                String mensaje = "Falta menos de 1 dia";
-                alerta(prestamo, mensaje);
+            if (dias == 1 || dias == 0) {
+                String mensaje = dias == 1 ? "Vence en 1 día" : "Vence hoy";
+                System.out.println("\nALERTA DE VENCIMIENTO: " + mensaje);
+                System.out.println(prestamo);
+
+                if (prestamo.getRecurso() instanceof Renovable) {
+                    System.out.println("¿Desea renovar este recurso? (s/n): ");
+                    String respuesta = sc.nextLine().trim().toLowerCase();
+
+                    if (respuesta.equals("s")) {
+                        gestorPrestamos.renovarPrestamo(prestamo.getRecurso());
+                    }
+                }
             }
         }
-    }
-
-    private void alerta(Prestamos prestamo, String mensaje) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("\n ALERTA DE VENCIMIENTO" + "(" + mensaje + ")\n");
-        System.out.println(prestamo + "\n");
-        if (prestamo.getRecurso() instanceof Renovable) {
-            System.out.println("Este recurso es renovable. Vaya la menu de renovaciones para renovarlo\n");
-        }
-
-        // me rompe el programa porque escanner no esta pensado para funcionar en hilos y un scanner
-        //se pisa con el otro (el de la consola y este)
-
-        //if (prestamo.getRecurso() instanceof Renovable) {
-        //    System.out.println("¿Desea renovar el prestamo(s/n)?");
-        //    sc.nextLine();
-        //    sc.close();
-        //    String opcion = sc.nextLine();
-        //    sc.nextLine();
-        //    if (opcion.equals("s")) {
-        //        ((Renovable) prestamo.getRecurso()).renovar();
-        //    }
-        //}
     }
 }

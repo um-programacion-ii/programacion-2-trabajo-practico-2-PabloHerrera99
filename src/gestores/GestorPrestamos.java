@@ -9,6 +9,7 @@ import src.modelos.RecursoDigital;
 import src.modelos.Reserva;
 import src.modelos.Usuario;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -88,14 +89,15 @@ public class GestorPrestamos {
     }
     public void renovarPrestamo(RecursoDigital recurso) {
         if (recurso instanceof Renovable) {
-            Renovable renovable = (Renovable) recurso;
-            if (!renovable.renovar()) {
-                System.out.println("El recurso no se pudo renovar");
+            for (Prestamos prestamo : prestamos) {
+                if (recurso.equals(prestamo.getRecurso())) {
+                    prestamo.setFechaDevolucion(LocalDateTime.now().plusDays(7));
+                    System.out.println("El prestamo se renovo.\n" +
+                            "Nueva fecha de devolucion:" + prestamo.getFechaDevolucion());
+                }
             }
-        } else {
-            System.out.println("El recurso no es renovable");
         }
-    }
+        }
 
     public void prestamosUsuario (Usuario usuario) {
         prestamos.stream()
