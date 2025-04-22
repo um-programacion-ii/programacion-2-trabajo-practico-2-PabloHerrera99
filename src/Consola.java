@@ -1,12 +1,10 @@
 package src;
 
 import src.Servicios.NotificacionesEmail;
-import src.gestores.GestorPrestamos;
-import src.gestores.GestorReservas;
+import src.enums.NivelUrgencia;
+import src.gestores.*;
 import src.interfaces.Notificacion;
 import src.modelos.*;
-import src.gestores.GestorUsuarios;
-import src.gestores.GestorRecursos;
 import src.reportes.AlertaDisponibilidad;
 import src.reportes.AlertaVencimiento;
 import src.reportes.Reporte;
@@ -19,21 +17,19 @@ public class Consola {
     private GestorRecursos gestorRecursos;
     private GestorPrestamos gestorPrestamos;
     private GestorReservas gestorReservas;
+    private GestorAlertas gestorAlertas;
     private Reporte reporte;
     private Scanner scanner;
-    private AlertaVencimiento alertaVencimiento;
-    private AlertaDisponibilidad alertaDisponibilidad;
+
 
     public Consola(GestorUsuarios usuarios, GestorRecursos recursos, GestorPrestamos prestamos,
-                   GestorReservas gestorReservas, Reporte reporte, AlertaVencimiento alertaVencimiento,
-                   AlertaDisponibilidad alertaDisponibilidad) {
+                   GestorReservas gestorReservas, Reporte reporte, GestorAlertas gestorAlertas) {
         this.gestorUsuarios = usuarios;
         this.gestorRecursos = recursos;
         this.gestorPrestamos = prestamos;
         this.gestorReservas = gestorReservas;
+        this.gestorAlertas = gestorAlertas;
         this.reporte = reporte;
-        this.alertaVencimiento = alertaVencimiento;
-        this.alertaDisponibilidad = alertaDisponibilidad;
         this.scanner = new Scanner(System.in);
 
 
@@ -72,15 +68,16 @@ public class Consola {
 
     public void menuPrincipal() {
         while (true) {
-            alertaVencimiento.mostrarVencimiento();
-            alertaDisponibilidad.mostrarDisponibilidad();
+            gestorAlertas.mostrarAlertasDisponibilidad();
+            gestorAlertas.mostrarAlertaVencimiento();
             System.out.println("---- Menú Principal ---- \n" +
                     "1. Gestión de usuarios \n" +
                     "2. Gestión de recursos \n" +
                     "3. Gestión de prestamos \n" +
                     "4. Gestión de reservas \n" +
-                    "5. Reportes\n" +
-                    "6. Salir \n" +
+                    "5. Gestionar alertas \n" +
+                    "6. Reportes\n" +
+                    "7. Salir \n" +
                     "Elija una opción: ");
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -98,17 +95,25 @@ public class Consola {
                     menuReservas();
                     break;
                 case 5:
-                    menuReporte();
+                    menuAlertas();
                     break;
                 case 6:
+                    menuReporte();
+                    break;
+                case 7:
                     System.exit(0);
             }
         }
     }
     private void menuGestionUsuario() {
         boolean continuar = true;
-        alertaVencimiento.mostrarVencimiento();
         while (continuar) {
+            if (gestorAlertas.getUrgenciaVencimiento() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertaVencimiento();
+            }
+            if (gestorAlertas.getUrgenciaDisponibilidad() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertasDisponibilidad();
+            }
             System.out.println("--- Menu De Gestión de Usuarios --- \n" +
                     "1. Crear Usuario \n" +
                     "2. Eliminar Usuario \n" +
@@ -145,6 +150,12 @@ public class Consola {
     private void menuGestionRecursos() {
         boolean continuar = true;
         while (continuar) {
+            if (gestorAlertas.getUrgenciaVencimiento() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertaVencimiento();
+            }
+            if (gestorAlertas.getUrgenciaDisponibilidad() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertasDisponibilidad();
+            }
             System.out.println("--- Menu De Gestion de Recursos --- \n" +
                         "1. Crear Recurso \n" +
                         "2. Eliminar Recurso \n" +
@@ -178,6 +189,12 @@ public class Consola {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
         while (continuar) {
+            if (gestorAlertas.getUrgenciaVencimiento() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertaVencimiento();
+            }
+            if (gestorAlertas.getUrgenciaDisponibilidad() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertasDisponibilidad();
+            }
             System.out.println("--- Menu Crear Recurso --- \n" +
                     "1. Crear Libro \n" +
                     "2. Crear Revista \n" +
@@ -221,6 +238,12 @@ public class Consola {
     public void menuPrestamos () {
         boolean continuar = true;
         while (continuar) {
+            if (gestorAlertas.getUrgenciaVencimiento() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertaVencimiento();
+            }
+            if (gestorAlertas.getUrgenciaDisponibilidad() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertasDisponibilidad();
+            }
             System.out.println("---Menu Prestamos---\n" +
                     "1. Pedir prestado un recurso \n" +
                     "2. Renovar recurso \n" +
@@ -273,6 +296,12 @@ public class Consola {
     public void menuReservas() {
         boolean continuar = true;
         while (continuar) {
+            if (gestorAlertas.getUrgenciaVencimiento() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertaVencimiento();
+            }
+            if (gestorAlertas.getUrgenciaDisponibilidad() == NivelUrgencia.ALTA) {
+                gestorAlertas.mostrarAlertasDisponibilidad();
+            }
             System.out.println("---Menu Prestamos---\n" +
                     "1. Reservar un recurso \n" +
                     "2. Cancelar reserva \n" +
@@ -326,6 +355,48 @@ public class Consola {
         }
     }
 
+    public void menuAlertas() {
+        System.out.println("---Menu Alertas---\n"+
+                "1.Cambiar prioridad de alertas de Vencimiento\n" +
+                "2.Cambiar la prioridad de alertas de Disponibilidad\n" +
+                "3.Historial de Alertas\n" +
+                "4.Volver al Menu Principal");
+        int opcion = scanner.nextInt();
+        scanner.nextLine();
+        switch (opcion) {
+            case 1:
+                System.out.println("1.Baja/2.Media/3.Alta");
+                int eleccion =scanner.nextInt();
+                switch (eleccion) {
+                    case 1:
+                        gestorAlertas.setUrgenciaVencimiento(NivelUrgencia.BAJA);
+                    case 2:
+                        gestorAlertas.setUrgenciaVencimiento(NivelUrgencia.MEDIA);
+                    case 3:
+                        gestorAlertas.setUrgenciaVencimiento(NivelUrgencia.ALTA);
+                }
+                break;
+            case 2:
+                System.out.println("1.Baja/2.Media/3.Alta");
+                int eleccion1 =scanner.nextInt();
+                switch (eleccion1) {
+                    case 1:
+                        gestorAlertas.setUrgenciaDisponibilidad(NivelUrgencia.BAJA);
+                    case 2:
+                        gestorAlertas.setUrgenciaDisponibilidad(NivelUrgencia.MEDIA);
+                    case 3:
+                        gestorAlertas.setUrgenciaDisponibilidad(NivelUrgencia.ALTA);
+                }
+                break;
+            case 3:
+                gestorAlertas.mostrarHistoria();
+                break;
+            case 4:
+                System.exit(0);
+        }
+
+    }
+
     public void menuReporte() {
         System.out.println("---Reporte del sistema ---");
         reporte.reportePrestamos();
@@ -333,4 +404,5 @@ public class Consola {
         reporte.reporteCategorias();
 
     }
+
 }

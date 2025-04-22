@@ -2,17 +2,14 @@ package src.reportes;
 
 import src.enums.EstadoRecurso;
 import src.gestores.GestorPrestamos;
-import src.gestores.GestorRecursos;
-import src.gestores.GestorReservas;
 import src.modelos.RecursoDigital;
-import src.modelos.Reserva;
 import src.modelos.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AlertaDisponibilidad {
+public class AlertaDisponibilidad{
     private List<RecursoDigital> recursos;
     private GestorPrestamos gestorPrestamos;
 
@@ -22,24 +19,24 @@ public class AlertaDisponibilidad {
     }
 
 
-    public void mostrarDisponibilidad() {
+    public List<String> mostrarDisponibilidad() {
+        List<String> mensajeAlertas = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
-        System.out.println("hola");
         for (RecursoDigital recurso : recursos) {
-            System.out.println("chau");
             if (recurso.getEstado() == EstadoRecurso.RESERVADO) {
                 Usuario siguiente = recurso.getReservas().peek().getUsuario();
-                System.out.println("\n ALERTA DE DISPONIBILIDAD");
-                System.out.println("El recurso " + recurso.getTitulo() + " esta disponible. \n" +
-                        "Para el usuario:" + siguiente.getNombre());
+
+                String mensaje = "\n ALERTA DE DISPONIBILIDAD \n" +
+                        "El recurso " + recurso.getTitulo() + " esta disponible. \n" +
+                        "Para el usuario:" + siguiente.getNombre();
+                mensajeAlertas.add(mensaje);
                 System.out.println("¿Desea pedir el prestamo ahora(s/n?");
                 String respuesta = sc.nextLine().trim().toLowerCase();
-
                 if (respuesta.equals("s")) {
                     gestorPrestamos.prestarRecurso(siguiente, recurso);
                 }
-
             }
         }
+        return mensajeAlertas;
     }
 }
