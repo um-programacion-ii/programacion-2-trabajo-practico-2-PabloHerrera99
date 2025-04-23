@@ -45,10 +45,7 @@ public class Consola {
         Usuario u1 = new Usuario("Ana",1,  "ana@mail.com",123456789);
         Usuario u2 = new Usuario("Pepe",2,  "pepe@mail.com",987654321);
         Usuario u3 = new Usuario("Juan",3,  "juan@mail.com",678912345);
-
-        Prestamos p1 = new Prestamos(u1, l1, LocalDateTime.now().plusDays(1));
-        Prestamos p2 = new Prestamos(u2, l2, LocalDateTime.now().plusHours(2));
-
+        
         gestorRecursos.crearRecurso(l1);
         gestorRecursos.crearRecurso(l2);
         gestorRecursos.crearRecurso(l3);
@@ -59,9 +56,6 @@ public class Consola {
         gestorUsuarios.addUsuario(u1);
         gestorUsuarios.addUsuario(u2);
         gestorUsuarios.addUsuario(u3);
-
-        gestorPrestamos.addPrestamos(p1);
-        gestorPrestamos.addPrestamos(p2);
 
     }
 
@@ -305,8 +299,7 @@ public class Consola {
                     "1. Reservar un recurso \n" +
                     "2. Cancelar reserva \n" +
                     "3. Mostrar reservas de un recurso \n" +
-                    "4. Procesar siguiente reserva \n" +
-                    "5. Volver al Menu Principal \n" +
+                    "4. Volver al Menu Principal \n" +
                     "Elija una opción:");
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -341,13 +334,6 @@ public class Consola {
                     gestorReservas.mostrarReservas(recursoMostrar);
                     break;
                 case 4:
-                    System.out.println("Nombre el titulo del recurso reservado: ");
-                    String tituloSiguiente =  scanner.nextLine();
-                    scanner.nextLine();
-                    RecursoDigital recursoSiguiente = gestorRecursos.buscarPrestamo(tituloSiguiente);
-                    gestorReservas.procesarReserva(recursoSiguiente);
-                    break;
-                case 5:
                     continuar = false;
                     break;
             }

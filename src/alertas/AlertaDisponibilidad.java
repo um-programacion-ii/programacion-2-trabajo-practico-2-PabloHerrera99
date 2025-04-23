@@ -1,4 +1,4 @@
-package src.reportes;
+package src.alertas;
 
 import src.enums.EstadoRecurso;
 import src.gestores.GestorPrestamos;

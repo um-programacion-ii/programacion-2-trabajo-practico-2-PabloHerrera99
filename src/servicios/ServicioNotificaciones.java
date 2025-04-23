@@ -1,4 +1,4 @@
-package src.Servicios;
+package src.servicios;
 
 import src.interfaces.Notificacion;
 

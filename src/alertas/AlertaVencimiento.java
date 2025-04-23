@@ -1,4 +1,4 @@
-package src.reportes;
+package src.alertas;
 
 import src.gestores.GestorPrestamos;
 import src.interfaces.Renovable;
