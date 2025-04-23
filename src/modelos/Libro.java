@@ -73,7 +73,7 @@ public class Libro extends RecursoDigital implements Prestable, Renovable {
     }
     @Override
     public LocalDateTime getFechaDevolucion() {
-        return LocalDateTime.now();
+        return LocalDateTime.now().plusDays(7);
     }
     @Override
     public void prestar(Usuario usuario) {
