@@ -1,8 +1,8 @@
 package src.gestores;
 
-import src.Servicios.NotificacionesEmail;
-import src.Servicios.NotificacionesSMS;
-import src.Servicios.ServicioNotificaciones;
+import src.servicios.NotificacionesEmail;
+import src.servicios.NotificacionesSMS;
+import src.servicios.ServicioNotificaciones;
 import src.interfaces.Notificacion;
 import src.modelos.Usuario;
 

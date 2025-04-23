@@ -1,8 +1,8 @@
 package src.gestores;
 
 import src.enums.NivelUrgencia;
-import src.reportes.AlertaVencimiento;
-import src.reportes.AlertaDisponibilidad;
+import src.alertas.AlertaVencimiento;
+import src.alertas.AlertaDisponibilidad;
 
 import java.util.ArrayList;
 import java.util.List;
