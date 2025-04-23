@@ -34,11 +34,12 @@ Antes de compilar y ejecutar el proyecto, asegurate de tener instalado lo siguie
 
 Compilar:
 
-    javac -d out TP1/*.java
+    javac -d out src/*.java
 
 Ejecutar:
 
-    java -cp out TP1.Main
+    java -cp out src/Main
+
 ### Estructura del proyecto
     El proyecto esta organizado utilizando principios SOLID:
 - modulos:

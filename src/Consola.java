@@ -45,7 +45,7 @@ public class Consola {
         Usuario u1 = new Usuario("Ana",1,  "ana@mail.com",123456789);
         Usuario u2 = new Usuario("Pepe",2,  "pepe@mail.com",987654321);
         Usuario u3 = new Usuario("Juan",3,  "juan@mail.com",678912345);
-        
+
         gestorRecursos.crearRecurso(l1);
         gestorRecursos.crearRecurso(l2);
         gestorRecursos.crearRecurso(l3);
