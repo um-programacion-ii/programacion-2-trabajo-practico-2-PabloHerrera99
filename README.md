@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/tc38IXJF)
 # 📚 Trabajo Práctico: Sistema de Gestión de Biblioteca Digital (Java 21+)
 
 ## 📌 Objetivo General
@@ -5,10 +6,188 @@
 Desarrollar un sistema de gestión de biblioteca digital que implemente los cinco principios SOLID, programación orientada a objetos, y conceptos avanzados de Java. El sistema deberá manejar diferentes tipos de recursos digitales, préstamos, reservas, y notificaciones en tiempo real.
 
 ## 👨‍🎓 Información del Alumno
-- **Nombre y Apellido**: [Nombre y Apellido del Alumno]
+- **Nombre y Apellido**: Pablo Herrera
+
+
+## Requisitos Previos
+
+Antes de compilar y ejecutar el proyecto, asegurate de tener instalado lo siguiente:
+
+- **JDK 8** o superior  
+[Descargar JDK](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+
+- **IntelliJ IDEA** u otro IDE compatible  
+[Descargar IntelliJ](https://www.jetbrains.com/idea/download/)
+
+- Git
+[Descargar Git](https://git-scm.com/downloads)
+
+
+## Instrucciones para Ejecutar
+
+# Cloná el repositorio (o descargalo como ZIP):
+
+    git clone https://github.com/um-programacion-ii/programacion-2-trabajo-practico-1-PabloHerrera99.git
+    cd programacion-2-trabajo-practico-1-PabloHerrera99.git 
+
+# Compilar y Ejecutar desde la Terminal
+
+Compilar:
+
+    javac -d out src/*.java
+
+Ejecutar:
+
+    java -cp out src/Main
+
+### Estructura del proyecto
+    El proyecto esta organizado utilizando principios SOLID:
+- modulos:
+Contiene las clases del dominio del sistema.
+    Usuario, RecursoDigital (Libro, Revista, Audiolibro), Reserva, Prestamos.
+
+ - gestores:
+Lógica central del sistema.
+    GestorUsuarios, GestorRecursos, GestorPrestamos, GestorReservas, GestorAlertas, GestorNotificaciones.
+
+ - servicios:
+En esta parte estan los servicion como el envio de notificaciones.
+    ServicioNotificaciones, NotificacionEmail, NotificacionSMS.
+
+ - alertas
+Manejo y priorización de alertas.
+    AlertaDisponibilidad, AlertaVencimiento
+
+ - reportes:
+Generación de reportes.
+    Reporte
+
+ - interfaces:
+Definición de comportamientos comunes.
+    InterfazRD, Prestable, Renovable, Notificacion.
+
+ - enums:
+Enumeraciones del sistema.
+    CategoriaRecurso, EstadoRecurso, NivelUrgencia.
+
+ - excepciones/
+Manejo de errores personalizados.
+    RecursoNoDisponibleException, UsuarioNoEncontradoException.
+
+ - Main.java:
+Punto de entrada del sistema.
+
+ - Consola.java:
+Menú e interacción con el usuario por consola.
+
+### Prueba de Funcionalidades
+1. Gestion de Usuario
+
+   Registrar usuario:
+    - Entrar el menu de gestion de usuarios (1)
+    - Crear usuario (1)
+    - Ingresar los datos pedidos (nombre, email, numero de telefono)
+
+   Eliminar usuario:
+    - Entrar el menu de gestion de usuarios (1)
+    - Eliminar usuario (2)
+    - Ingresar el id del usuario a eliminar
+
+   Listar usuario:
+    - Entrar el menu de gestion de usuarios (1)
+    - Listar usuarios (3)
+
+   Buscar Usuario:
+    - Entrar el menu de gestion de usuarios (1)
+    - Buscar Usuario por Id (4)
+    - Ingresar el id del usuario buscado
+   
+2. Gestión de recursos
+
+   Agregar libro:
+   - Entrar el menu de gestion de recuros (2)
+   - Crear recurso (1)
+   - crear libro (1)
+   - Pasar los datos en el orden pedido (titulo, autor, genero, saga)
+   
+   Eliminar recurso:
+    - Entrar el menu de gestion de recuros (2)
+    - Eliminar recurso (2)
+    - Ingresar el titulo del recurso que desea eliminar
+
+   Listar recurso:
+   - Entrar el menu de gestion de recuros (2)
+   - Buscar recurso (3)
+   - se va a pedir un filtro por el cual buscar, escribiendo todosse listaran todos los recurso
+     
+   Buscar recurso:
+   - Entrar el menu de gestion de recuros (2)
+   - Buscar recurso (4)
+   - Ingresar el titulo del recurso (Ej:El retorno del rey)
+
+
+3. Prestamos:
+
+   Pedir prestado un recurso:
+   - Entrar al menu de gestion de prestamos (3)
+   - Pedir prestado un recurso(1) 
+   - Dar los datos pedidos (titulo del recurso, nombre del usuario)(ej: el retorno del rey, ana)
+
+   Renovar recurso:
+   - Entrar al menu de gestion de prestamos (3)
+   - Renovar recurso(2)
+   - Insertar nombre del recurso a renovar
+ 
+   Devolver recurso: 
+   - Entrar al menu de gestion de prestamos (3) 
+   - Devolver recurso(3) 
+   - Insertar nombre del recurso que quiere devolver
+ 
+   Listar recursos que tiene el usuario
+   - Entrar al menu de gestion de prestamos (3) 
+   - Listar recursos que tiene el usuario(4)
+   - insertar nombre del usuario
+
+4. Reservas:
+
+   Reservar un recurso:
+   - Entrar al menu de gestion de reservas (4)
+   - Reservar un recurso(1)
+   - Dar los datos pedidos (titulo del recurso, nombre del usuario)(ej: el retorno del rey, ana)
+
+   Cancelar reserva:
+    - Entrar al menu de gestion de reservas (4)
+    - Cancelar reserva(2)
+    - Dar los datos pedidos (titulo del recurso, nombre del usuario)(puede usar la reserva de la prueba anterior para probar esta)
+   
+   Mostrar reservas de un recurso:
+    - Entrar al menu de gestion de reservas (4)
+    - Mostrar reservas de un recurso (3)
+    - Dar los datos pedidos (titulo del recurso)
+
+5. Alertas:
+
+   Cambiar prioridad de alertas de Vencimiento:
+    - Entrar al menu de gestion de alertas (5)
+    - Cambiar prioridad de alertas de Vencimiento (1)
+    - Elegir la prioridad deseada(1 para Baja/ 2 para Media/3 para Alta)
+   
+   Cambiar la prioridad de alertas de Disponibilidad:
+    - Entrar al menu de gestion de alertas (5)
+    - Cambiar prioridad de alertas de Disponibilidad (2)
+    - Elegir la prioridad deseada(1 para Baja/ 2 para Media/3 para Alta)
+   
+   Historial de Alertas:
+    - Entrar al menu de gestion de alertas (5)
+    - Historial de Alertas (5)
+
+6. Reportes
+
+    - Entrar al menu de Reportes (6)
+    - Elija que reportes quiere ver (1,2,3)   
+
 
 ## 📋 Requisitos Adicionales
-
 ### Documentación del Sistema
 Como parte del trabajo práctico, deberás incluir en este README una guía de uso que explique:
 
@@ -35,7 +214,6 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 - La inclusión de ejemplos prácticos
 
 ### Prueba de Funcionalidades
-
 #### 1. Gestión de Recursos
 - **Agregar Libro**: 
   - Proceso para agregar un nuevo libro al sistema
@@ -53,12 +231,12 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
   - Ordenamiento de resultados
 
 #### 2. Gestión de Usuarios
-- **Registrar Usuario**:
+- **Registrar src.modelos.Usuario**:
   - Proceso de registro de nuevos usuarios
   - Validación de datos del usuario
   - Verificación del registro exitoso
 
-- **Buscar Usuario**:
+- **Buscar src.modelos.Usuario**:
   - Proceso de búsqueda de usuarios
   - Visualización de información del usuario
   - Manejo de usuarios no encontrados
@@ -126,21 +304,21 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 
 ### Etapa 1: Diseño Base y Principios SOLID
 - **SRP**: 
-  - Crear clase `Usuario` con atributos básicos (nombre, ID, email)
-  - Crear clase `RecursoDigital` como clase base abstracta
+  - Crear clase `src.modelos.Usuario` con atributos básicos (nombre, ID, email)
+  - Crear clase `src.modelos.RecursoDigital` como clase base abstracta
   - Implementar clase `GestorUsuarios` separada de `GestorRecursos`
   - Cada clase debe tener una única responsabilidad clara
-  - Implementar clase `Consola` para manejar la interacción con el usuario
+  - Implementar clase `src.Consola` para manejar la interacción con el usuario
 
 - **OCP**: 
-  - Diseñar interfaz `RecursoDigital` con métodos comunes
+  - Diseñar interfaz `src.modelos.RecursoDigital` con métodos comunes
   - Implementar clases concretas `Libro`, `Revista`, `Audiolibro`
   - Usar herencia para extender funcionalidad sin modificar código existente
   - Ejemplo: agregar nuevo tipo de recurso sin cambiar clases existentes
   - Implementar menú de consola extensible para nuevos tipos de recursos
 
 - **LSP**: 
-  - Asegurar que todas las subclases de `RecursoDigital` puedan usarse donde se espera `RecursoDigital`
+  - Asegurar que todas las subclases de `src.modelos.RecursoDigital` puedan usarse donde se espera `src.modelos.RecursoDigital`
   - Implementar métodos comunes en la clase base
   - Validar que el comportamiento sea consistente en todas las subclases
   - Crear métodos de visualización en consola para todos los tipos de recursos
@@ -148,7 +326,7 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 - **ISP**: 
   - Crear interfaz `Prestable` para recursos que se pueden prestar
   - Crear interfaz `Renovable` para recursos que permiten renovación
-  - Implementar solo las interfaces necesarias en cada clase
+  - Implementar solo las src.interfaces necesarias en cada clase
   - Diseñar menús de consola específicos para cada tipo de operación
 
 - **DIP**: 
@@ -159,8 +337,8 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 
 ### Etapa 2: Gestión de Recursos y Colecciones
 - Implementar colecciones:
-  - Usar `ArrayList<RecursoDigital>` para almacenar recursos
-  - Usar `Map<String, Usuario>` para gestionar usuarios
+  - Usar `ArrayList<src.modelos.RecursoDigital>` para almacenar recursos
+  - Usar `Map<String, src.modelos.Usuario>` para gestionar usuarios
   - Implementar métodos de búsqueda básicos
   - Crear menú de consola para gestión de recursos
 
@@ -242,33 +420,44 @@ La guía debe ser clara, concisa y permitir a cualquier usuario entender y proba
 ## 📋 Detalle de Implementación
 
 ### 1. Estructura Base
+
 ```java
-// Interfaces principales
-public interface RecursoDigital {
-    String getIdentificador();
-    EstadoRecurso getEstado();
-    void actualizarEstado(EstadoRecurso estado);
+// src.interfaces principales
+public interface modelos.
+
+RecursoDigital {
+    String getIdentificador ();
+
+    EstadoRecurso getEstado ();
+
+    void actualizarEstado (EstadoRecurso estado);
 }
 
 public interface Prestable {
     boolean estaDisponible();
+
     LocalDateTime getFechaDevolucion();
+
     void prestar(Usuario usuario);
 }
 
 public interface Notificable {
     void enviarNotificacion(String mensaje);
+
     List<Notificacion> getNotificacionesPendientes();
 }
 
 // Clase base abstracta
-public abstract class RecursoBase implements RecursoDigital, Prestable {
+public abstract class RecursoBase implements src.modelos.RecursoDigital, Prestable {
     // Implementación común
 }
 ```
 
 ### 2. Gestión de Biblioteca
+
 ```java
+import src.modelos.RecursoDigital;
+
 public class GestorBiblioteca {
     private final Map<String, RecursoDigital> recursos;
     private final List<Prestamo> prestamos;
@@ -289,7 +478,7 @@ public class SistemaPrestamos {
 ## ✅ Entrega y Flujo de Trabajo con GitHub
 
 1. **Configuración del Repositorio**
-   - Proteger la rama `main`
+   - Proteger la rama `src.Main`
    - Crear template de Issues y Pull Requests
 
 2. **Project Kanban**
